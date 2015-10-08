@@ -2,8 +2,10 @@
   (:require [clojure.string :as string])
 
 (defn parse-point [param-str]
-  (map #(Integer/parseInt %)
-       (string/split param-str #",")))
+  (transduce
+    (map #(Integer/parseInt %))
+    conj
+    (string/split param-str #",")))
 
 (defn parse-extent [param-str]
   (map #(parse-point %)
