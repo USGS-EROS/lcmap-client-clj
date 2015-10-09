@@ -1,5 +1,5 @@
 (defproject gov.usgs/lcmap-client "0.1.0-dev"
-  :description "FIXME: write description"
+  :description "Clojure Client for USGS LCMAP REST Service"
   :url "https://github.com/USGS-EROS/lcmap-client-clj"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
