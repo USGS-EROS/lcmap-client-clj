@@ -1,4 +1,4 @@
-(defproject lcmap-client "0.1.0-SNAPSHOT"
+(defproject gov.usgs/lcmap-client "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "https://github.com/USGS-EROS/lcmap-client-clj"
   :license {:name "Eclipse Public License"
