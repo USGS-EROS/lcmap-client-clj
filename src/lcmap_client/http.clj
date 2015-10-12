@@ -31,8 +31,8 @@
 
 ;; XXX the debug parameters aren't working right now; need to look into that
 (defn set-defaults [req]
-  (merge-with #'merge {:headers default-headers
-                       :query-params util/debug}
+  (merge-with #'merge (into {:headers default-headers}
+                            util/debug)
               req))
 
 (defn get [path & [req]]
