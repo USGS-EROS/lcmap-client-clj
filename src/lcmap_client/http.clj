@@ -41,12 +41,17 @@
 
 (defn get-default-headers
   ([]
-   (get-default-headers server-version default-content-type))
+   (get-default-headers server-version default-content-type ""))
   ([version]
-   (get-default-headers version default-content-type))
-  ([version content-type]
    (get-default-headers version default-content-type ""))
+  ([version content-type]
+   (get-default-headers version content-type ""))
   ([version content-type api-key]
+   ;; XXX debug
+    (log/info "get-default-headers:")
+    (log/info "passed args:")
+    (log/info [version content-type])
+    (log/info (format-accept version content-type))
    {"user-agent" user-agent
     "accept" (format-accept version content-type)
     ;; XXX fill in the auth once the mechanism has been defined
@@ -73,41 +78,44 @@
     (into opts [util/debug])
     opts))
 
-(defn combine-lcmap-opts
+(defn update-lcmap-opts
   "This combines the options specific to the LCMAP client in the following
   order of precedence:
    * the default options are the least important, overridden by all
    * an explicit map of options overrides the defaults
    * any keyword args provided override the defaults and an options with the
      same keyword"
-  [opts keywords]
-  (let [opts (util/remove-nil opts)
-        keywords (util/remove-nil keywords)]
-    (log/info (into default-options [opts keywords]))
-    (into default-options [opts keywords])))
+  [opts]
+  ;; XXX debug
+  (log/info "combine-lcmap-opts:")
+  (log/info (into default-options [(util/remove-nil opts)]))
+  (into default-options [(util/remove-nil opts)]))
 
 (defn combine-http-opts [opts request headers & {:keys [debug]}]
   (let [opts (get-clj-http-opts opts :debug debug)
         request (util/deep-merge headers request)]
+    ;; XXX debug
+    (log/info "combine-http-opts:")
     (log/info (util/deep-merge request opts))
     (util/deep-merge request opts)))
 
 (defn get-keywords [args]
   (util/remove-nil
+   ;; XXX debug
+   (log/info "get-keywords:")
+   (log/info (apply dissoc args [:lcmap-opts :clj-http-opts :request]))
    (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
-(defn http-call [method path & {:keys [lcmap-opts clj-http-opts request endpoint
-                                       version content-type api-key return
-                                       debug]
+(defn http-call [method path & {:keys [lcmap-opts clj-http-opts request]
                                 :as args}]
-  (let [{:endpoint endpoint :version server-version
-         :content-type default-content-type :return return
-         :debug debug} (combine-lcmap-opts lcmap-opts args)
+  (let [{endpoint :endpoint version :version content-type :content-type
+         return :return debug :debug} (update-lcmap-opts lcmap-opts)
         http-func (get-http-func method)
+        api-key (:api-key lcmap-opts)
         url (str endpoint path)
         default-headers (get-default-headers version content-type api-key)
         request (combine-http-opts clj-http-opts request default-headers
-                                 :debug debug)
+                                   :debug debug)
         result (http-func url request)]
     (if (= return :body)
       (:body result)
