@@ -1,5 +1,6 @@
 (ns lcmap-client.util
-  (:require [clojure.string :as string]))
+  (:require [clojure.tools.logging :as log]
+            [clojure.string :as string]))
 
 (def debug {:debug true
             :debug-body true
@@ -26,3 +27,12 @@
   (if extent
     ["" (extent->str extent)]
     [(point->str point) ""]))
+
+(defn deep-merge [map-1 map-2]
+  (merge-with #'merge (into map-1 map-2)))
+
+(defn remove-nil [map-data]
+  (into {}
+        (filter
+          (comp not nil? val)
+          map-data)))

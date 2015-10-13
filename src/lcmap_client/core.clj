@@ -1,5 +1,5 @@
 (ns lcmap-client.core
-  (:require [lcmap-client.http :refer :all])
-  (:refer-clojure :exclude [get update]))
+  (:require [clojure.tools.logging :as log]
+            [lcmap-client.http :refer :all]))
 
 (def noop :noop)

@@ -1,16 +1,16 @@
 (ns lcmap-client.http
-  (:require [clj-http.client :as http]
+  (:require [clojure.tools.logging :as log]
+            [clj-http.client :as http]
             [leiningen.core.project :as lein]
             [lcmap-client.util :as util])
   (:refer-clojure :exclude [get update]))
 
 (def context "/api")
-
-(def client-version (System/getProperty "lcmap-client.version"))
-(def server-version "v1.0")
+(def server-version "1.0")
 ;; XXX once the service goes live, the endpoint will be something like
 ;;(def endpoint "http://lcmap.usgs.gov")
 (def endpoint "http://localhost:8080")
+(def client-version (System/getProperty "lcmap-client.version"))
 (def project-url (:url (lein/read)))
 (def user-agent (str "LCMAP REST Client/"
                      client-version
@@ -21,52 +21,122 @@
                      ") (+"
                      project-url
                      ")"))
+(def default-content-type "json")
+(def default-options {:endpoint endpoint
+                      :version server-version
+                      :content-type default-content-type
+                      :return :body
+                      :debug false})
+(defn format-accept [version content-type]
+  (str "application/vnd.usgs.lcmap.v"
+       version
+       "+"
+       content-type))
 
-(defn format-server-version [version]
-  (str "application/vnd.usgs.lcmap." version "+json"))
+(defn default-options-as-symbols []
+  (into {}
+        (map (fn [[k v]]
+               [(symbol (name k)) v])
+             (seq default-options))))
 
-(def default-headers
-  {"user-agent" user-agent
-   "accept" (format-server-version server-version)})
+(defn get-default-headers
+  ([]
+   (get-default-headers server-version default-content-type))
+  ([version]
+   (get-default-headers version default-content-type))
+  ([version content-type]
+   (get-default-headers version default-content-type ""))
+  ([version content-type api-key]
+   {"user-agent" user-agent
+    "accept" (format-accept version content-type)
+    ;; XXX fill in the auth once the mechanism has been defined
+    ;; see the following tickets for more info:
+    ;;  * https://my.usgs.gov/jira/browse/LCMAP-66
+    ;;  * https://my.usgs.gov/jira/browse/LCMAP-85
+    ;;"authorization" ""
+    }))
 
-;; XXX the debug parameters aren't working right now; need to look into that
-(defn set-defaults [req]
-  (merge-with #'merge (into {:headers default-headers}
-                            util/debug)
-              req))
+(defn get-http-func [method]
+  (case method
+    :get #'http/get
+    :head #'http/head
+    :post #'http/post
+    :put #'http/put
+    :delete #'http/delete
+    :options #'http/options
+    :copy #'http/copy
+    :move #'http/move
+    :patch #'http/patch))
 
-(defn get [path & [req]]
-  (:body (http/get (str endpoint path)
-                   (set-defaults req))))
+(defn get-clj-http-opts [opts & {:keys [debug]}]
+  (if debug
+    (into opts [util/debug])
+    opts))
 
-(defn head [path & [req]]
-  (:body (http/head (str endpoint path)
-                    (set-defaults req))))
+(defn combine-lcmap-opts
+  "This combines the options specific to the LCMAP client in the following
+  order of precedence:
+   * the default options are the least important, overridden by all
+   * an explicit map of options overrides the defaults
+   * any keyword args provided override the defaults and an options with the
+     same keyword"
+  [opts keywords]
+  (let [opts (util/remove-nil opts)
+        keywords (util/remove-nil keywords)]
+    (log/info (into default-options [opts keywords]))
+    (into default-options [opts keywords])))
 
-(defn post [path & [req]]
-  (:body (http/post (str endpoint path)
-                    (set-defaults req))))
+(defn combine-http-opts [opts request headers & {:keys [debug]}]
+  (let [opts (get-clj-http-opts opts :debug debug)
+        request (util/deep-merge headers request)]
+    (log/info (util/deep-merge request opts))
+    (util/deep-merge request opts)))
 
-(defn put [path & [req]]
-  (:body (http/put (str endpoint path)
-                   (set-defaults req))))
+(defn get-keywords [args]
+  (util/remove-nil
+   (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
-(defn delete [path & [req]]
-  (:body (http/delete (str endpoint path)
-                      (set-defaults req))))
+(defn http-call [method path & {:keys [lcmap-opts clj-http-opts request endpoint
+                                       version content-type api-key return
+                                       debug]
+                                :as args}]
+  (let [{:endpoint endpoint :version server-version
+         :content-type default-content-type :return return
+         :debug debug} (combine-lcmap-opts lcmap-opts args)
+        http-func (get-http-func method)
+        url (str endpoint path)
+        default-headers (get-default-headers version content-type api-key)
+        request (combine-http-opts clj-http-opts request default-headers
+                                 :debug debug)
+        result (http-func url request)]
+    (if (= return :body)
+      (:body result)
+      result)))
+  
+(defn get [path & args]
+  (apply http-call (into [:get path] args)))
 
-(defn options [path & [req]]
-  (:body (http/options (str endpoint path)
-                       (set-defaults req))))
+(defn head [path & args]
+  (apply http-call (into [:head path] args)))
 
-(defn copy [path & [req]]
-  (:body (http/copy (str endpoint path)
-                    (set-defaults req))))
+(defn post [path & args]
+  (apply http-call (into [:post path] args)))
 
-(defn move [path & [req]]
-  (:body (http/move (str endpoint path)
-                    (set-defaults req))))
+(defn put [path & args]
+  (apply http-call (into [:put path] args)))
 
-(defn patch [path & [req]]
-  (:body (http/patch (str endpoint path)
-                     (set-defaults req))))
+(defn delete [path & args]
+  (apply http-call (into [:delete path] args)))
+
+(defn options [path & args]
+  (apply http-call (into [:options path] args)))
+
+(defn copy [path & args]
+  (apply http-call (into [:copy path] args)))
+
+(defn move [path & args]
+  (apply http-call (into [:move path] args)))
+
+(defn patch [path & args]
+  (apply http-call (into [:patch path] args)))
+
