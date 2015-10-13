@@ -6,8 +6,9 @@
 
 (def context (str l8/context "/SurfaceReflectance"))
 
-(defn get-resources [& args]
-  (http/get (str context "/") :lcmap-opts args))
+(defn get-resources [& {keys [] :as args}]
+  (http/get (str context "/")
+            :lcmap-opts (or args {})))
 
 (defn get-tiles [& {:keys [point extent time band] :as args}]
   (let [[point extent] (util/update-point-extent point extent)
