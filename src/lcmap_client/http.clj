@@ -47,11 +47,6 @@
   ([version content-type]
    (get-default-headers version content-type ""))
   ([version content-type api-key]
-   ;; XXX debug
-    (log/info "get-default-headers:")
-    (log/info "passed args:")
-    (log/info [version content-type])
-    (log/info (format-accept version content-type))
    {"user-agent" user-agent
     "accept" (format-accept version content-type)
     ;; XXX fill in the auth once the mechanism has been defined
@@ -86,24 +81,15 @@
    * any keyword args provided override the defaults and an options with the
      same keyword"
   [opts]
-  ;; XXX debug
-  (log/info "combine-lcmap-opts:")
-  (log/info (into default-options [(util/remove-nil opts)]))
-  (into default-options [(util/remove-nil opts)]))
+  (into default-options (util/remove-nil opts)))
 
 (defn combine-http-opts [opts request headers & {:keys [debug]}]
   (let [opts (get-clj-http-opts opts :debug debug)
         request (util/deep-merge headers request)]
-    ;; XXX debug
-    (log/info "combine-http-opts:")
-    (log/info (util/deep-merge request opts))
     (util/deep-merge request opts)))
 
 (defn get-keywords [args]
   (util/remove-nil
-   ;; XXX debug
-   (log/info "get-keywords:")
-   (log/info (apply dissoc args [:lcmap-opts :clj-http-opts :request]))
    (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
 (defn http-call [method path & {:keys [lcmap-opts clj-http-opts request]
