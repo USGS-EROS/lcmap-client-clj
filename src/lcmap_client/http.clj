@@ -47,8 +47,8 @@
   ([version content-type]
    (get-default-headers version content-type ""))
   ([version content-type api-key]
-   {"user-agent" user-agent
-    "accept" (format-accept version content-type)
+   {:user-agent user-agent
+    :accept (format-accept version content-type)
     ;; XXX fill in the auth once the mechanism has been defined
     ;; see the following tickets for more info:
     ;;  * https://my.usgs.gov/jira/browse/LCMAP-66
@@ -85,7 +85,7 @@
 
 (defn combine-http-opts [opts headers request & {:keys [debug]}]
   (let [opts (get-clj-http-opts opts :debug debug)
-        request (util/deep-merge request headers)]
+        request (util/deep-merge request {:headers headers})]
     (util/deep-merge request opts)))
 
 (defn get-keywords [args]
@@ -93,6 +93,7 @@
    (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
 (defn http-call [method path & {:keys [lcmap-opts clj-http-opts request]
+                                :or {lcmap-opts {} clj-http-opts {} request {}}
                                 :as args}]
   (let [{endpoint :endpoint version :version content-type :content-type
          return :return debug :debug} (update-lcmap-opts lcmap-opts)
