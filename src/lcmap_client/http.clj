@@ -83,9 +83,9 @@
   [opts]
   (into default-options (util/remove-nil opts)))
 
-(defn combine-http-opts [opts request headers & {:keys [debug]}]
+(defn combine-http-opts [opts headers request & {:keys [debug]}]
   (let [opts (get-clj-http-opts opts :debug debug)
-        request (util/deep-merge headers request)]
+        request (util/deep-merge request headers)]
     (util/deep-merge request opts)))
 
 (defn get-keywords [args]
@@ -100,7 +100,7 @@
         api-key (:api-key lcmap-opts)
         url (str endpoint path)
         default-headers (get-default-headers version content-type api-key)
-        request (combine-http-opts clj-http-opts request default-headers
+        request (combine-http-opts clj-http-opts default-headers request
                                    :debug debug)
         result (http-func url request)]
     (if (= return :body)
