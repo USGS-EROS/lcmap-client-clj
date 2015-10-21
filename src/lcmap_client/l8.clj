@@ -1,4 +1,4 @@
-(ns lcmap-client.l8.core
+(ns lcmap-client.l8
   (:require [clojure.tools.logging :as log]
             [lcmap-client.http :as lcmap]))
 
