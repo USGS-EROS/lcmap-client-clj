@@ -2,7 +2,7 @@
   (:require [clojure.tools.logging :as log]
             [lcmap-client.http :as http]
             [lcmap-client.util :as util]
-            [lcmap-client.l8.core :as l8]))
+            [lcmap-client.l8 :as l8]))
 
 (def context (str l8/context "/SurfaceReflectance"))
 
@@ -28,4 +28,4 @@
                                        :time time
                                        :band band}})))
 
-  
+
