@@ -3,7 +3,7 @@
             [clj-http.client :as http]
             [leiningen.core.project :as lein]
             [lcmap-client.util :as util])
-  (:refer-clojure :exclude [get update]))
+  (:refer-clojure :exclude [get]))
 
 (def context "/api")
 (def server-version "1.0")
@@ -107,7 +107,7 @@
     (if (= return :body)
       (:body result)
       result)))
-  
+
 (defn get [path & args]
   (apply http-call (into [:get path] args)))
 
