@@ -1,5 +1,6 @@
 (ns lcmap-client.http
   (:require [clojure.tools.logging :as log]
+            [clojure.data.json :as json]
             [clj-http.client :as http]
             [leiningen.core.project :as lein]
             [lcmap-client.util :as util])
@@ -27,7 +28,9 @@
                       :content-type default-content-type
                       :return :body
                       :debug false})
+
 (defn format-accept [version content-type]
+  ;; XXX split content-type with "/" and use below, e.g.: "application/json"
   (str "application/vnd.usgs.lcmap.v"
        version
        "+"
@@ -90,48 +93,57 @@
 
 (defn get-keywords [args]
   (util/remove-nil
-   (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
+    (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
-(defn http-call [method path & {:keys [lcmap-opts clj-http-opts request]
+(defn- -http-call [method path & {:keys [lcmap-opts clj-http-opts request]
                                 :or {lcmap-opts {} clj-http-opts {} request {}}
                                 :as args}]
+  (log/debug "Got args:" args)
   (let [{endpoint :endpoint version :version content-type :content-type
          return :return debug :debug} (update-lcmap-opts lcmap-opts)
-        http-func (get-http-func method)
         api-key (:api-key lcmap-opts)
+        http-func (get-http-func method)
         url (str endpoint path)
         default-headers (get-default-headers version content-type api-key)
-        request (combine-http-opts clj-http-opts default-headers request
-                                   :debug debug)
-        result (http-func url request)]
+        request (combine-http-opts clj-http-opts
+                                   default-headers
+                                   (into request {:as :auto})
+                                   :debug debug)]
+    (log/debug "Making request:" request)
+    {:result (http-func url request)
+     :return return}))
+
+(defn http-call [method path args]
+  (let [{result :result
+         return :return} (apply -http-call (into [method path] args))]
     (if (= return :body)
-      (:body result)
-      result)))
+        (json/read-str (:body result) :key-fn keyword)
+        result)))
 
 (defn get [path & args]
-  (apply http-call (into [:get path] args)))
+  (http-call :get path args))
 
 (defn head [path & args]
-  (apply http-call (into [:head path] args)))
+  (http-call :head path args))
 
 (defn post [path & args]
-  (apply http-call (into [:post path] args)))
+  (http-call :post path args))
 
 (defn put [path & args]
-  (apply http-call (into [:put path] args)))
+  (http-call :put path args))
 
 (defn delete [path & args]
-  (apply http-call (into [:delete path] args)))
+  (http-call :delete path args))
 
 (defn options [path & args]
-  (apply http-call (into [:options path] args)))
+  (http-call :options path args))
 
 (defn copy [path & args]
-  (apply http-call (into [:copy path] args)))
+  (http-call :copy path args))
 
 (defn move [path & args]
-  (apply http-call (into [:move path] args)))
+  (http-call :move path args))
 
 (defn patch [path & args]
-  (apply http-call (into [:patch path] args)))
+  (http-call :patch path args))
 
