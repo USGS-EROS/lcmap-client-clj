@@ -107,7 +107,7 @@
         default-headers (get-default-headers version content-type api-key)
         request (combine-http-opts clj-http-opts
                                    default-headers
-                                   (into request {:as :auto})
+                                   request
                                    :debug debug)]
     (log/debug "Making request:" request)
     {:result (http-func url request)
