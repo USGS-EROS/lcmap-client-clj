@@ -27,9 +27,15 @@
       (do (memo/memo-clear! -read)
           (-read)))))
 
+(defn get-env [key]
+  (let [value (System/getenv key)]
+    (if (= value "")
+      nil
+      value)))
+
 (defn get-value [key]
   (let [cfg-data ((read) (keyword "LCMAP Client"))]
-    (or (System/getenv (str "LCMAP_" (string/upper-case (name key))))
+    (or (get-env (str "LCMAP_" (string/upper-case (name key))))
       (cfg-data key))))
 
 (defn get-username []
