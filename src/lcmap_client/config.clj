@@ -1,18 +1,20 @@
 (ns lcmap-client.config
   (:require [clojure.core.memoize :as memo]
+            [clojure.java.io :as io]
             [clojure.string :as string]
             [clojure.tools.logging :as log]
             [clojure-ini.core :as ini]
             [lcmap-client.lcmap :as lcmap])
   (:refer-clojure :exclude [read]))
 
-(def filename "~/.usgs/lcmap.ini")
+(def home (System/getProperty "user.home"))
+(def ini-file (io/file home ".usgs" "lcmap.ini"))
 
-(defn -read []
+(def -read
   (memo/lu
     (fn []
       (log/debug "Memoizing LCMAP config ini ...")
-      (ini/read-ini filename :keywordize? true))))
+      (ini/read-ini ini-file :keywordize? true))))
 
 (defn read
   ([]
@@ -26,8 +28,9 @@
           (-read)))))
 
 (defn get-value [key]
-  (or (System/getenv (str "LCMAP_" (string/upper-case key)))
-    ))
+  (let [cfg-data ((read) (keyword "LCMAP Client"))]
+    (or (System/getenv (str "LCMAP_" (string/upper-case (name key))))
+      (cfg-data key))))
 
 (defn get-username []
   (get-value :username))
