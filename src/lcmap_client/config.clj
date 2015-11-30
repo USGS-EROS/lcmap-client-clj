@@ -29,9 +29,7 @@
 
 (defn get-env [key]
   (let [value (System/getenv key)]
-    (if (= value "")
-      nil
-      value)))
+    (when-not (= value "") value)))
 
 (defn get-value [key]
   (let [cfg-data ((read) (keyword "LCMAP Client"))]

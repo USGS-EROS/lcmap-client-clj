@@ -1,5 +1,6 @@
 (ns lcmap-client.auth
   (:require [clojure.tools.logging :as log]
+            [lcmap-client.config :as config]
             [lcmap-client.http :as http]
             [lcmap-client.lcmap :as lcmap]))
 
@@ -8,7 +9,10 @@
 
 (def context (str lcmap/context "/auth"))
 
-(defn login [& {:keys [username password] :as args}]
+(defn login [& {:keys [username password]
+                :or {username (config/get-username)
+                     password (config/get-password)}
+                :as args}]
   (http/post (str context "/login")
              :clj-http-opts {:form-params {:username username
                                            :password password}}
