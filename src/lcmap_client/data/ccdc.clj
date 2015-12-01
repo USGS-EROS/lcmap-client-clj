@@ -1,12 +1,10 @@
-(ns lcmap-client.sample
+(ns lcmap-client.data.ccdc
   (:require [clojure.tools.logging :as log]
             [lcmap-client.http :as http]
+            [lcmap-client.data :as data]
             [lcmap-client.lcmap :as lcmap]))
 
-;; Note that the client endpoint is defined  using the "/api" prefix, so the
-;; following context is appended to that.
-
-(def context (str lcmap/context "/L3/sample"))
+(def context (str data/context "/ccdc"))
 
 (defn get-resources [& {keys [] :as args}]
   (http/get (str context "/")

@@ -1,6 +1,5 @@
 (ns lcmap-client.core-test
-  (:require [clojure.test :refer :all]
-            [lcmap-client.core :refer :all]))
+  (:require [clojure.test :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

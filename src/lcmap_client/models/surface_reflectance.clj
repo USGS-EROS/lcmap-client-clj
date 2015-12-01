@@ -1,10 +1,10 @@
-(ns lcmap-client.l8.surface-reflectance
+(ns lcmap-client.models.surface-reflectance
   (:require [clojure.tools.logging :as log]
             [lcmap-client.http :as http]
-            [lcmap-client.util :as util]
-            [lcmap-client.l8 :as l8]))
+            [lcmap-client.models :as models]
+            [lcmap-client.util :as util]))
 
-(def context (str l8/context "/SurfaceReflectance"))
+(def context (str models/context "/surface-reflectance"))
 
 (defn get-resources [& {keys [] :as args}]
   (http/get (str context "/")
