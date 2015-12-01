@@ -1,10 +1,9 @@
-(ns lcmap-client.compatibility.wmts
+(ns lcmap-client.compatibility
   (:require [clojure.tools.logging :as log]
             [lcmap-client.http :as http]
-            [lcmap-client.compatibility :as compatibility]
             [lcmap-client.lcmap :as lcmap]))
 
-(def context (str compatibility/context "/wmts"))
+(def context (str lcmap/context "/compatibility"))
 
 (defn get-resources [& {keys [] :as args}]
   (http/get (str context "/")
