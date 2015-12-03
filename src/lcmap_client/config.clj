@@ -27,17 +27,35 @@
       (do (memo/memo-clear! -read)
           (-read)))))
 
+(defn make-env-name [key]
+  (-> (name key)
+      (string/replace #"-" "-")
+      (string/upper-case)
+      (#(str "LCMAP_" %))))
+
 (defn get-env [key]
-  (let [value (System/getenv key)]
+  (let [value (System/getenv (make-env-name key))]
     (when-not (= value "") value)))
 
 (defn get-value [key]
   (let [cfg-data ((read) (keyword "LCMAP Client"))]
-    (or (get-env (str "LCMAP_" (string/upper-case (name key))))
-      (cfg-data key))))
+    (or (get-env key)
+        (cfg-data key))))
 
 (defn get-username []
   (get-value :username))
 
 (defn get-password []
   (get-value :password))
+
+(defn get-version []
+  (get-value :version))
+
+(defn get-endpoint []
+  (get-value :endpoint))
+
+(defn get-content-type []
+  (get-value :content-type))
+
+(defn get-log-level []
+  (keyword (get-value :log-level)))
