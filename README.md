@@ -4,9 +4,24 @@ LCMAP REST Service Client for Clojure
 
 [Very WIP ... not ready for use]
 
-## Usage
+## Configuration
+
+Client library configuration is done using a Config/INI file. See the
+
+## Documentation
+
+Full documentation for all LCMAP clients is available here:
+ * http://usgs-eros.github.io/lcmap-client-docs/current/
+
+Note that per-client usage and example code is selectable via tabs in the upper-right of that page.
+
+
+## Example Usage
+
+Starting:
 
 ```bash
+$ cd lcmap-client-clj
 $ lein repl
 ```
 
