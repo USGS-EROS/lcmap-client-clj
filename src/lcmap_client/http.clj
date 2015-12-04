@@ -2,8 +2,10 @@
   (:require [clojure.tools.logging :as log]
             [clojure.data.json :as json]
             [clj-http.client :as http]
+            [dire.core :refer [with-handler!]]
             [leiningen.core.project :as lein]
             [lcmap-client.config :as config]
+            [lcmap-client.status-codes :as status]
             [lcmap-client.util :as util])
   (:refer-clojure :exclude [get]))
 
@@ -106,7 +108,9 @@
         request (combine-http-opts clj-http-opts
                                    (into default-headers headers)
                                    request
-                                   :debug debug)]
+                                   :debug debug
+                                   :coerce :always
+                                   :throw-exceptions false)]
     (log/debug "Making request:" request)
     {:result (http-func url request)
      :return return}))
@@ -144,4 +148,16 @@
 
 (defn patch [path & args]
   (http-call :patch path args))
+
+;;; Exception Handling ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(with-handler! #'http-call
+  [:status status/no-resource]
+  (fn [e & args]
+    (log/error e)
+    {:status (:status e)
+     :result nil
+     :errors ["Resource not found"]
+     :headers (:headers e)
+     :args args}))
 
