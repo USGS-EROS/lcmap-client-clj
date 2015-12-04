@@ -53,8 +53,11 @@
   ([version]
     (or (get-value :version) version)))
 
-(defn get-endpoint []
-  (get-value :endpoint))
+(defn get-endpoint
+  ([]
+    (get-endpoint nil))
+  ([endpoint]
+    (or (get-value :endpoint) endpoint)))
 
 (defn get-content-type
   ([]

@@ -103,7 +103,7 @@
   (let [{endpoint :endpoint version :version content-type :content-type
          return :return debug :debug} (update-lcmap-opts lcmap-opts)
         http-func (get-http-func method)
-        url (str endpoint path)
+        url (str (or endpoint (config/get-endpoint)) path)
         default-headers (get-base-headers version content-type token)
         request (combine-http-opts clj-http-opts
                                    (into default-headers headers)
