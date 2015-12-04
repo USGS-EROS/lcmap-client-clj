@@ -12,6 +12,8 @@
   (http/get (str context "/")
             :lcmap-opts (or args {})))
 
-(defn run [job-id & {:keys [] :as args}]
-  (http/post (str context "/run/" job-id)
+(defn run [& {:keys [token year delay] :as args}]
+  (http/post context
+             :token token
+             :clj-http-opts {:form-params {:year year :delay delay}}
              :lcmap-opts args))

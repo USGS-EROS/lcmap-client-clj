@@ -3,8 +3,7 @@
             [clojure.java.io :as io]
             [clojure.string :as string]
             [clojure.tools.logging :as log]
-            [clojure-ini.core :as ini]
-            [lcmap-client.lcmap :as lcmap])
+            [clojure-ini.core :as ini])
   (:refer-clojure :exclude [read]))
 
 (def home (System/getProperty "user.home"))
@@ -48,14 +47,20 @@
 (defn get-password []
   (get-value :password))
 
-(defn get-version []
-  (get-value :version))
+(defn get-version
+  ([]
+    (get-version nil))
+  ([version]
+    (or (get-value :version) version)))
 
 (defn get-endpoint []
   (get-value :endpoint))
 
-(defn get-content-type []
-  (get-value :content-type))
+(defn get-content-type
+  ([]
+    (get-content-type nil))
+  ([content-type]
+    (or (get-value :content-type) content-type)))
 
 (defn get-log-level []
   (keyword (get-value :log-level)))

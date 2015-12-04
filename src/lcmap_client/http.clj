@@ -3,6 +3,7 @@
             [clojure.data.json :as json]
             [clj-http.client :as http]
             [leiningen.core.project :as lein]
+            [lcmap-client.config :as config]
             [lcmap-client.util :as util])
   (:refer-clojure :exclude [get]))
 
@@ -24,8 +25,6 @@
                      ")"))
 (def default-content-type "json")
 (def default-options {:endpoint endpoint
-                      :version server-version
-                      :content-type default-content-type
                       :return :body
                       :debug false})
 
@@ -42,22 +41,20 @@
                [(symbol (name k)) v])
              (seq default-options))))
 
-(defn get-default-headers
+(defn get-base-headers
   ([]
-   (get-default-headers server-version default-content-type ""))
+   (get-base-headers nil nil ""))
   ([version]
-   (get-default-headers version default-content-type ""))
+   (get-base-headers version nil ""))
   ([version content-type]
-   (get-default-headers version content-type ""))
-  ([version content-type api-key]
-   {:user-agent user-agent
-    :accept (format-accept version content-type)
-    ;; XXX fill in the auth once the mechanism has been defined
-    ;; see the following tickets for more info:
-    ;;  * https://my.usgs.gov/jira/browse/LCMAP-66
-    ;;  * https://my.usgs.gov/jira/browse/LCMAP-85
-    ;;"authorization" ""
-    }))
+   (get-base-headers version content-type ""))
+  ([version content-type token]
+    (let [api-version (or version (config/get-version server-version))
+          api-content-type (or content-type
+                               (config/get-content-type default-content-type))]
+     {:user-agent user-agent
+      :accept (format-accept api-version api-content-type)
+      :x-authtoken token})))
 
 (defn get-http-func [method]
   (case method
@@ -95,18 +92,19 @@
   (util/remove-nil
     (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
-(defn- -http-call [method path & {:keys [lcmap-opts clj-http-opts request]
-                                :or {lcmap-opts {} clj-http-opts {} request {}}
-                                :as args}]
+(defn- -http-call [method path & {:keys [lcmap-opts clj-http-opts request
+                                         headers token]
+                                  :or {lcmap-opts {} clj-http-opts {} request {}
+                                       headers {} token ""}
+                                  :as args}]
   (log/debug "Got args:" args)
   (let [{endpoint :endpoint version :version content-type :content-type
          return :return debug :debug} (update-lcmap-opts lcmap-opts)
-        api-key (:api-key lcmap-opts)
         http-func (get-http-func method)
         url (str endpoint path)
-        default-headers (get-default-headers version content-type api-key)
+        default-headers (get-base-headers version content-type token)
         request (combine-http-opts clj-http-opts
-                                   default-headers
+                                   (into default-headers headers)
                                    request
                                    :debug debug)]
     (log/debug "Making request:" request)
