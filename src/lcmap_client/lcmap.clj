@@ -9,11 +9,10 @@
   (http/get (str context "/")
             :lcmap-opts (or args {})))
 
-(defn follow-link [result & args]
-  (let [url (str (config/get-endpoint)
-                  "/"
-                  (get-in result [:result :link :href]))]
-    (log/debug "Following URL:" url)
+(defn follow-link [result & {:keys [] :as args}]
+  (let [path (get-in result [:result :link :href])]
+    (log/debug "Following path:" path)
+    (log/debug "Passing options: " args)
     (http/get
-      url
+      path
       :lcmap-opts (or args {}))))

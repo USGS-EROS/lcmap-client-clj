@@ -37,6 +37,7 @@
     (when-not (= value "") value)))
 
 (defn get-value [key]
+  (log/debug "Getting configuration value for key:" key)
   (let [cfg-data ((read) (keyword "LCMAP Client"))]
     (or (get-env key)
         (cfg-data key))))

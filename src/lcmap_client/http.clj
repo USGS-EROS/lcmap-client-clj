@@ -1,3 +1,16 @@
+;;;; Our little http client needs to be able to handle three sets of options:
+;;;;  * those intended for lcmap-rest itself
+;;;;  * those that get passed to the underlying clj-http client library
+;;;;  * and finally any options that are passed to Compojure as k/v pairs in
+;;;; the request
+;;;;
+;;;; As such, we have provided wrapper functions for clj-http that allow us to
+;;;; keep each of these separate from the others.
+;;;;
+;;;; XXX The first implementation of this is a bit messy, as it grew while we
+;;;; explored the use cases. We definitely need to come back here and clean this
+;;;; up.
+;;;;
 (ns lcmap-client.http
   (:require [clojure.tools.logging :as log]
             [clojure.data.json :as json]
@@ -40,7 +53,9 @@
 (defn default-options-as-symbols []
   (into {}
         (map (fn [[k v]]
-               [(symbol (name k)) v])
+               (if-not (symbol? k)
+                 [(symbol (name k)) v]
+                 [k v]))
              (seq default-options))))
 
 (defn get-base-headers
@@ -51,7 +66,9 @@
   ([version content-type]
    (get-base-headers version content-type ""))
   ([version content-type token]
-    (let [api-version (or version (config/get-version server-version))
+    (log/debug "Getting base headers ...")
+    (let [api-version (or version
+                          (config/get-version server-version))
           api-content-type (or content-type
                                (config/get-content-type default-content-type))]
      {:user-agent user-agent
@@ -83,7 +100,10 @@
    * any keyword args provided override the defaults and an options with the
      same keyword"
   [opts]
-  (into default-options (util/remove-nil opts)))
+  (log/debug "Updating lcmap options:" opts)
+  (let [new-opts (into default-options (util/remove-nil opts))]
+    (log/debug "Got new opts:" new-opts)
+    new-opts))
 
 (defn combine-http-opts [opts headers request & {:keys [debug]}]
   (let [opts (get-clj-http-opts opts :debug debug)
@@ -95,13 +115,13 @@
     (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
 (defn- -http-call [method path & {:keys [lcmap-opts clj-http-opts request
-                                         headers token]
+                                         headers]
                                   :or {lcmap-opts {} clj-http-opts {} request {}
-                                       headers {} token ""}
+                                       headers {}}
                                   :as args}]
   (log/debug "Got args:" args)
   (let [{endpoint :endpoint version :version content-type :content-type
-         return :return debug :debug} (update-lcmap-opts lcmap-opts)
+         return :return debug :debug token :token} (update-lcmap-opts lcmap-opts)
         http-func (get-http-func method)
         url (str (or endpoint (config/get-endpoint)) path)
         default-headers (get-base-headers version content-type token)
@@ -111,13 +131,14 @@
                                    :debug debug
                                    :coerce :always
                                    :throw-exceptions false)]
-    (log/debug "Making request:" request)
+    (log/debugf "Making request to %s: %s" url request)
     {:result (http-func url request)
      :return return}))
 
 (defn http-call [method path args]
   (let [{result :result
          return :return} (apply -http-call (into [method path] args))]
+    (log/debugf "For return type %s, got result:" return result)
     (if (= return :body)
         (json/read-str (:body result) :key-fn keyword)
         result)))
