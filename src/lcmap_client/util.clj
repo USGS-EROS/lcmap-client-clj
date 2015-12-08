@@ -36,3 +36,9 @@
         (filter
           (comp not nil? val)
           map-data)))
+
+(defn in?
+  "This function returns true if the provided seqenuce contains the given
+  elment."
+  [seq elm]
+  (some #(= elm %) seq))

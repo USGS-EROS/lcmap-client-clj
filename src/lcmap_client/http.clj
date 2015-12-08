@@ -102,7 +102,7 @@
   [opts]
   (log/debug "Updating lcmap options:" opts)
   (let [new-opts (into default-options (util/remove-nil opts))]
-    (log/debug "Got new opts:" new-opts)
+    (log/trace "Got new opts:" new-opts)
     new-opts))
 
 (defn combine-http-opts [opts headers request & {:keys [debug]}]
@@ -119,7 +119,7 @@
                                   :or {lcmap-opts {} clj-http-opts {} request {}
                                        headers {}}
                                   :as args}]
-  (log/debug "Got args:" args)
+  (log/trace "Got args:" args)
   (let [{endpoint :endpoint version :version content-type :content-type
          return :return debug :debug token :token} (update-lcmap-opts lcmap-opts)
         http-func (get-http-func method)
@@ -131,14 +131,14 @@
                                    :debug debug
                                    :coerce :always
                                    :throw-exceptions false)]
-    (log/debugf "Making request to %s: %s" url request)
+    (log/tracef "Making request to %s: %s" url request)
     {:result (http-func url request)
      :return return}))
 
 (defn http-call [method path args]
   (let [{result :result
          return :return} (apply -http-call (into [method path] args))]
-    (log/debugf "For return type %s, got result:" return result)
+    (log/tracef "For return type %s, got result:" return result)
     (if (= return :body)
         (json/read-str (:body result) :key-fn keyword)
         result)))

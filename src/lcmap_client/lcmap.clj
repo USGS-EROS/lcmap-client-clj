@@ -11,8 +11,7 @@
 
 (defn follow-link [result & {:keys [] :as args}]
   (let [path (get-in result [:result :link :href])]
-    (log/debug "Following path:" path)
-    (log/debug "Passing options: " args)
+    (log/tracef "Following path %s with options: %s" path args)
     (http/get
       path
       :lcmap-opts (or args {}))))
