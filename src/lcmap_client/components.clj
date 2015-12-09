@@ -14,6 +14,8 @@
   (:require [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
             [lcmap-client.components.config :as config]
+            [lcmap-client.components.conn-mgr :as conn-mgr]
+            [lcmap-client.components.cred-mgr :as cred-mgr]
             [lcmap-client.components.logger :as logger]))
 
 (defn init []
@@ -21,4 +23,12 @@
     :cfg (config/new-configuration)
     :logger (component/using
               (logger/new-logger)
-              [:cfg])))
+              [:cfg])
+    :cred-mgr (component/using
+              (cred-mgr/new-manager)
+              [:cfg])
+    :conn-mgr (component/using
+                (conn-mgr/new-manager)
+                [:cfg])))
+
+(def stop #'component/stop)
