@@ -1,8 +1,7 @@
 (ns lcmap-client.core
   (:require [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
-            [lcmap-client.components :as components]
-            [lcmap-client.http :as http]))
+            [lcmap-client.components :as components]))
 
 (defn connect []
   (component/start
@@ -16,9 +15,7 @@
 
 (def refresh #'reconnect)
 
-(defn follow-link [result & {:keys [] :as args}]
-  (let [path (get-in result [:result :link :href])]
-    (log/tracef "Following path %s with options: %s" path args)
-    (http/get
-      path
-      :lcmap-opts (or args {}))))
+(defn get-pool [client]
+  (get-in client [:conn-mgr :pool]))
+
+

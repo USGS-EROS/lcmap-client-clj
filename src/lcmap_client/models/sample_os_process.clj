@@ -8,12 +8,13 @@
 
 (def context (str models/context "/sample/os-process"))
 
-(defn get-resources [& {keys [] :as args}]
+(defn get-resources [client & {keys [] :as args}]
   (http/get (str context "/")
+            :client client
             :lcmap-opts (or args {})))
 
-(defn run [& {:keys [token year delay] :as args}]
+(defn run [client & {:keys [year delay] :as args}]
   (http/post context
-             :token token
+             :client client
              :clj-http-opts {:form-params {:year year :delay delay}}
              :lcmap-opts args))

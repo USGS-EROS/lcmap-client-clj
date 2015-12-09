@@ -115,13 +115,16 @@
     (apply dissoc args [:lcmap-opts :clj-http-opts :request])))
 
 (defn- -http-call [method path & {:keys [lcmap-opts clj-http-opts request
-                                         headers]
+                                         headers client]
                                   :or {lcmap-opts {} clj-http-opts {} request {}
-                                       headers {}}
+                                       headers {} client {}}
                                   :as args}]
   (log/trace "Got args:" args)
   (let [{endpoint :endpoint version :version content-type :content-type
-         return :return debug :debug token :token} (update-lcmap-opts lcmap-opts)
+         return :return debug :debug :as opts}
+         (update-lcmap-opts lcmap-opts)
+        token (or (get-in client [:cred-mgr :creds :token]) (:token opts))
+        pool (get-in client [:conn-mgr :pool])
         http-func (get-http-func method)
         url (str (or endpoint (config/get-endpoint)) path)
         default-headers (get-base-headers version content-type token)
@@ -130,7 +133,8 @@
                                    request
                                    :debug debug
                                    :coerce :always
-                                   :throw-exceptions false)]
+                                   :throw-exceptions false
+                                   :connection-manager pool)]
     (log/tracef "Making request to %s: %s" url request)
     {:result (http-func url request)
      :return return}))
@@ -169,6 +173,16 @@
 
 (defn patch [path & args]
   (http-call :patch path args))
+
+;;; Special functions
+
+(defn follow-link [client result & {:keys [] :as args}]
+  (let [path (get-in result [:result :link :href])]
+    (log/tracef "Following path %s with options: %s" path args)
+    (get
+      path
+      :client client
+      :lcmap-opts (or args {}))))
 
 ;;; Exception Handling ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
