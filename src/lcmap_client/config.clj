@@ -9,11 +9,14 @@
 (def home (System/getProperty "user.home"))
 (def ini-file (io/file home ".usgs" "lcmap.ini"))
 
+(declare serialize)
+
 (def -read
   (memo/lu
     (fn []
       (log/debug "Memoizing LCMAP config ini ...")
-      (ini/read-ini ini-file :keywordize? true))))
+      (serialize
+        (ini/read-ini ini-file :keywordize? true)))))
 
 (defn read
   ([]
@@ -36,9 +39,15 @@
   (let [value (System/getenv (make-env-name key))]
     (when-not (= value "") value)))
 
+(defn get-section
+  ([section-name]
+    (get-section (read) section-name))
+  ([cfg section-name]
+    (cfg (keyword section-name))))
+
 (defn get-value [key]
   (log/debug "Getting configuration value for key:" key)
-  (let [cfg-data ((read) (keyword "LCMAP Client"))]
+  (let [cfg-data (get-section "LCMAP Client")]
     (or (get-env key)
         (cfg-data key))))
 
@@ -68,3 +77,41 @@
 
 (defn get-log-level []
   (keyword (get-value :log-level)))
+
+(defn serialize-logging-namespaces [client-cfg]
+  (into client-cfg
+        {:logging-namespaces
+          (->> (string/split (:logging-namespaces client-cfg) #" ")
+               (map symbol)
+               (into []))}))
+
+(defn serialize-loglevel [client-cfg]
+  (into client-cfg
+    {:log-level
+      (-> (:log-level client-cfg)
+          (string/lower-case)
+          (keyword))}))
+
+(defn update-section
+  ([section-name values]
+    (update-section (read) section-name values))
+  ([top-cfg section-name values]
+    (into top-cfg {(keyword section-name) values})))
+
+(defn serialize-section
+  ([update-data]
+    (serialize-section (read) update-data))
+  ([top-cfg [section-name update-functions]]
+    (let [section-cfg (get-section top-cfg section-name)
+          section-vals (reduce #(%2 %1) section-cfg update-functions)]
+      (update-section top-cfg section-name section-vals))))
+
+(defn serialize
+  ([]
+    (serialize (read)))
+  ([top-cfg]
+    (serialize top-cfg
+               [["LCMAP Client" [#'serialize-logging-namespaces
+                                 #'serialize-loglevel]]]))
+  ([top-cfg update-data]
+    (into {} (map #(serialize-section top-cfg %) update-data))))

@@ -19,7 +19,7 @@
     (log/info "Setting up LCMAP logging ...")
     (let [log-level (get-in component [:cfg :log-level])
           namespaces (get-in component [:cfg :logging-namespaces])]
-      (log/info "Using log-level" log-level)
+      (log/info "Using log-level" log-level "for namespaces" namespaces)
       (logger/set-level! namespaces log-level)
       ;;(dorun (map #(logger/set-level! % log-level) namespaces))
       (log/trace "Logging agent:" log/*logging-agent*)
