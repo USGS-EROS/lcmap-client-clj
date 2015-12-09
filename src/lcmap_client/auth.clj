@@ -17,3 +17,18 @@
              :clj-http-opts {:form-params {:username username
                                            :password password}}
              :lcmap-opts (or args {})))
+
+(defn get-token [client]
+  (get-in client [:cred-mgr :creds :token]))
+
+(defn get-userid [client]
+  (get-in client [:cred-mgr :creds :user-id]))
+
+(defn get-username [client]
+  (get-in client [:cred-mgr :creds :username]))
+
+(defn get-roles [client]
+  (get-in client [:cred-mgr :creds :roles]))
+
+(defn get-email [client]
+  (get-in client [:cred-mgr :creds :email]))
