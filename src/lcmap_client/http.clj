@@ -12,8 +12,9 @@
 ;;;; up.
 ;;;;
 (ns lcmap-client.http
-  (:require [clojure.tools.logging :as log]
-            [clojure.data.json :as json]
+  (:require [clojure.data.json :as json]
+            [clojure.string :as string]
+            [clojure.tools.logging :as log]
             [clj-http.client :as http]
             [dire.core :refer [with-handler!]]
             [leiningen.core.project :as lein]
@@ -24,6 +25,8 @@
 
 (def context "/api")
 (def server-version "1.0")
+(def default-content-type "json")
+(def vendor "vnd.usgs.lcmap")
 ;; XXX once the service goes live, the endpoint will be something like
 ;;(def endpoint "http://lcmap.usgs.gov")
 (def endpoint (config/get-endpoint "http://localhost:8080"))
@@ -38,17 +41,22 @@
                      ") (+"
                      project-url
                      ")"))
-(def default-content-type "json")
+
 (def default-options {:endpoint endpoint
                       :return :body
                       :debug false})
 
-(defn format-accept [version content-type]
+(defn response [& {:keys [result errors status]
+                   :or {result nil errors [] status 200}
+                   :as args}]
+  {:result result :errors errors :status status})
+
+
+(defn format-accept [vendor version content-type]
   ;; XXX split content-type with "/" and use below, e.g.: "application/json"
-  (str "application/vnd.usgs.lcmap.v"
-       version
-       "+"
-       content-type))
+  (let [[media-type suffix] (string/split content-type #"/")]
+    (str media-type "/" vendor ".v" version "+"
+         (or suffix default-content-type))))
 
 (defn default-options-as-symbols []
   (into {}
@@ -72,7 +80,7 @@
           api-content-type (or content-type
                                (config/get-content-type default-content-type))]
      {:user-agent user-agent
-      :accept (format-accept api-version api-content-type)
+      :accept (format-accept vendor api-version api-content-type)
       :x-authtoken token})))
 
 (defn get-http-func [method]
