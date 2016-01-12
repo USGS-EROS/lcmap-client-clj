@@ -16,5 +16,5 @@
 (defn run [client & {:keys [year docker-tag] :as args}]
   (http/post context
              :client client
-             :clj-http-opts {:form-params {:year year :delay delay}}
+             :clj-http-opts {:form-params {:year year :docker-tag docker-tag}}
              :lcmap-opts args))
