@@ -1,17 +1,13 @@
-;;;; Our little http client needs to be able to handle three sets of options:
-;;;;  * those intended for lcmap-rest itself
-;;;;  * those that get passed to the underlying clj-http client library
-;;;;  * and finally any options that are passed to Compojure as k/v pairs in
-;;;; the request
-;;;;
-;;;; As such, we have provided wrapper functions for clj-http that allow us to
-;;;; keep each of these separate from the others.
-;;;;
-;;;; XXX The first implementation of this is a bit messy, as it grew while we
-;;;; explored the use cases. We definitely need to come back here and clean this
-;;;; up.
-;;;;
-(ns lcmap-client.http
+(ns ^{:doc
+  "Our little http client needs to be able to handle three sets of options:
+   * those intended for lcmap-rest itself
+   * those that get passed to the underlying clj-http client library
+   * and finally any options that are passed to Compojure as k/v pairs in
+  the request
+
+  As such, we have provided wrapper functions for clj-http that allow us to
+  keep each of these separate from the others.";
+  lcmap-client.http
   (:require [clojure.data.json :as json]
             [clojure.string :as string]
             [clojure.tools.logging :as log]
@@ -22,6 +18,10 @@
             [lcmap-client.status-codes :as status]
             [lcmap-client.util :as util])
   (:refer-clojure :exclude [get]))
+
+;;;; XXX The first implementation of this is a bit messy, as it grew while we
+;;;; explored the use cases. We definitely need to come back here and clean
+;;;; this up.
 
 (def context "/api")
 (def server-version "1.0")
@@ -192,7 +192,7 @@
       :client client
       :lcmap-opts (or args {}))))
 
-;;; Exception Handling ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Exception Handling              ;;
 
 (with-handler! #'http-call
   [:status status/no-resource]
