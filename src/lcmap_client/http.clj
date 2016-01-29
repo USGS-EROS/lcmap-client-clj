@@ -6,7 +6,7 @@
   the request
 
   As such, we have provided wrapper functions for clj-http that allow us to
-  keep each of these separate from the others.";
+  keep each of these separate from the others."}
   lcmap-client.http
   (:require [clojure.data.json :as json]
             [clojure.string :as string]
