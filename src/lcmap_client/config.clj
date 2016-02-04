@@ -11,12 +11,21 @@
 
 (declare serialize)
 
+(defn file-exists?
+  [file-name]
+  (.exists (io/as-file file-name)))
+
 (def -read
   (memo/lu
     (fn []
-      (log/debug "Memoizing LCMAP config ini ...")
-      (serialize
-        (ini/read-ini ini-file :keywordize? true)))))
+      (if (file-exists? ini-file)
+        (do
+          (log/debug "Memoizing LCMAP config ini ...")
+          (serialize
+            (ini/read-ini ini-file :keywordize? true)))
+        (do
+          (log/warn "No client configuration file found; will use ENV")
+          {})))))
 
 (defn read
   ([]
