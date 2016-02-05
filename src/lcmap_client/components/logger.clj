@@ -10,7 +10,7 @@
   (:require [clojure.tools.logging :as log]
             [clojure.tools.logging.impl :as log-impl]
             [com.stuartsierra.component :as component]
-            [lcmap-client.logger :as logger]))
+            [twig.core :as logger]))
 
 (defrecord Logger []
   component/Lifecycle
