@@ -17,14 +17,16 @@
   (.exists (io/as-file file-name)))
 
 (def -read
-  (let [ini-file (io/file home ".usgs" "lcmap.ini")]
-    (memo/lu
-      (fn []
+  (memo/lu
+    (fn []
+      (let [ini-file (io/file home ".usgs" "lcmap.ini")]
         (if (file-exists? ini-file)
           (do
             (log/debug "Memoizing LCMAP config ini ...")
             (serialize
-              (ini/read-ini ini-file :keywordize? true)))
+              (ini/read-ini ini-file :keywordize? true))
+            (log/debug "Closing .ini file ...")
+            (.close ini-file))
           (do
             (log/warn "No client configuration file found; will use ENV")
             empty-config))))))
