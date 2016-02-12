@@ -6,8 +6,9 @@
             [clojure-ini.core :as ini])
   (:refer-clojure :exclude [read]))
 
+(def env-prefix "LCMAP")
 (def home (System/getProperty "user.home"))
-(def ini-file (io/file home ".usgs" "lcmap.ini"))
+(def empty-config {})
 
 (declare serialize)
 
@@ -16,16 +17,17 @@
   (.exists (io/as-file file-name)))
 
 (def -read
-  (memo/lu
-    (fn []
-      (if (file-exists? ini-file)
-        (do
-          (log/debug "Memoizing LCMAP config ini ...")
-          (serialize
-            (ini/read-ini ini-file :keywordize? true)))
-        (do
-          (log/warn "No client configuration file found; will use ENV")
-          {})))))
+  (let [ini-file (io/file home ".usgs" "lcmap.ini")]
+    (memo/lu
+      (fn []
+        (if (file-exists? ini-file)
+          (do
+            (log/debug "Memoizing LCMAP config ini ...")
+            (serialize
+              (ini/read-ini ini-file :keywordize? true)))
+          (do
+            (log/warn "No client configuration file found; will use ENV")
+            empty-config))))))
 
 (defn read
   ([]
@@ -42,7 +44,7 @@
   (-> (name key)
       (string/replace #"-" "-")
       (string/upper-case)
-      (#(str "LCMAP_" %))))
+      (#(str env-prefix "_" %))))
 
 (defn get-env [key]
   (let [value (System/getenv (make-env-name key))]
