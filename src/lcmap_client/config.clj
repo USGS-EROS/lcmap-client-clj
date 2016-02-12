@@ -8,6 +8,8 @@
 
 (def env-prefix "LCMAP")
 (def home (System/getProperty "user.home"))
+(def config-dir ".usgs")
+(def config-file "lcmap.ini")
 (def empty-config {})
 
 (declare serialize)
@@ -19,14 +21,12 @@
 (def -read
   (memo/lu
     (fn []
-      (let [ini-file (io/file home ".usgs" "lcmap.ini")]
+      (let [ini-file (io/file home config-dir config-file)]
         (if (file-exists? ini-file)
           (do
             (log/debug "Memoizing LCMAP config ini ...")
             (serialize
-              (ini/read-ini ini-file :keywordize? true))
-            (log/debug "Closing .ini file ...")
-            (.close ini-file))
+              (ini/read-ini ini-file :keywordize? true)))
           (do
             (log/warn "No client configuration file found; will use ENV")
             empty-config))))))
