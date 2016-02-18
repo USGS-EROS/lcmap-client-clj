@@ -53,4 +53,4 @@ user=> (sr/get-resources :debug true)
 
 ## License
 
-TBD
+NASA Open Source Agreement, Version 1.3

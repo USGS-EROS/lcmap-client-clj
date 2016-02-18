@@ -1,8 +1,8 @@
 (defproject gov.usgs.eros/lcmap-client "0.1.0-dev"
   :description "Clojure Client for USGS LCMAP REST Service"
   :url "https://github.com/USGS-EROS/lcmap-client-clj"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :license {:name "NASA Open Source Agreement, Version 1.3"
+            :url "http://ti.arc.nasa.gov/opensource/nosa/"}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [org.clojure/core.memoize "0.5.8"]

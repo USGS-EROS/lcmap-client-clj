@@ -1,214 +1,244 @@
-THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
-LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM
-CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+NASA OPEN SOURCE AGREEMENT VERSION 1.3
+
+THIS OPEN SOURCE AGREEMENT ("AGREEMENT") DEFINES THE RIGHTS OF USE,
+REPRODUCTION, DISTRIBUTION, MODIFICATION AND REDISTRIBUTION OF CERTAIN
+COMPUTER SOFTWARE ORIGINALLY RELEASED BY THE UNITED STATES GOVERNMENT
+AS REPRESENTED BY THE GOVERNMENT AGENCY LISTED BELOW ("GOVERNMENT
+AGENCY"). THE UNITED STATES GOVERNMENT, AS REPRESENTED BY GOVERNMENT
+AGENCY, IS AN INTENDED THIRD-PARTY BENEFICIARY OF ALL SUBSEQUENT
+DISTRIBUTIONS OR REDISTRIBUTIONS OF THE SUBJECT SOFTWARE. ANYONE WHO
+USES, REPRODUCES, DISTRIBUTES, MODIFIES OR REDISTRIBUTES THE SUBJECT
+SOFTWARE, AS DEFINED HEREIN, OR ANY PART THEREOF, IS, BY THAT ACTION,
+ACCEPTING IN FULL THE RESPONSIBILITIES AND OBLIGATIONS CONTAINED IN
+THIS AGREEMENT.
+
+Government Agency: USGS
+Government Agency Original Software Designation: ESPA
+Government Agency Original Software Title: ESPA
+User Registration Requested. Please Visit http://landsat.usgs.gov/contactus.php
+Government Agency Point of Contact for Original Software: John Dwyer
 
 1. DEFINITIONS
 
-"Contribution" means:
-
-a) in the case of the initial Contributor, the initial code and
-documentation distributed under this Agreement, and
-
-b) in the case of each subsequent Contributor:
-
-i) changes to the Program, and
-
-ii) additions to the Program;
-
-where such changes and/or additions to the Program originate from and are
-distributed by that particular Contributor. A Contribution 'originates' from
-a Contributor if it was added to the Program by such Contributor itself or
-anyone acting on such Contributor's behalf. Contributions do not include
-additions to the Program which: (i) are separate modules of software
-distributed in conjunction with the Program under their own license
-agreement, and (ii) are not derivative works of the Program.
-
-"Contributor" means any person or entity that distributes the Program.
-
-"Licensed Patents" mean patent claims licensable by a Contributor which are
-necessarily infringed by the use or sale of its Contribution alone or when
-combined with the Program.
-
-"Program" means the Contributions distributed in accordance with this
-Agreement.
-
-"Recipient" means anyone who receives the Program under this Agreement,
-including all Contributors.
+A. "Contributor" means Government Agency, as the developer of the
+Original Software, and any entity that makes a Modification.
+B. "Covered Patents" mean patent claims licensable by a Contributor
+that are necessarily infringed by the use or sale of its Modification
+alone or when combined with the Subject Software.
+C. "Display" means the showing of a copy of the Subject Software,
+either directly or by means of an image, or any other device.
+D. "Distribution" means conveyance or transfer of the Subject
+Software, regardless of means, to another.
+E. "Larger Work" means computer software that combines Subject
+Software, or portions thereof, with software separate from the Subject
+Software that is not governed by the terms of this Agreement.
+F. "Modification" means any alteration of, including addition to or
+deletion from, the substance or structure of either the Original
+Software or Subject Software, and includes derivative works, as that
+term is defined in the Copyright Statute, 17 USC 101. However, the
+act of including Subject Software as part of a Larger Work does not in
+and of itself constitute a Modification.
+G. "Original Software" means the computer software first released
+under this Agreement by Government Agency with Government Agency
+designation ESPA and entitled ESPA, including source code,
+object code and accompanying documentation, if any.
+H. "Recipient" means anyone who acquires the Subject Software under
+this Agreement, including all Contributors.
+I. "Redistribution" means Distribution of the Subject Software after a
+Modification has been made.
+J. "Reproduction" means the making of a counterpart, image or copy of
+the Subject Software.
+K. "Sale" means the exchange of the Subject Software for money or
+equivalent value.
+L. "Subject Software" means the Original Software, Modifications, or
+any respective parts thereof.
+M. "Use" means the application or employment of the Subject Software
+for any purpose.
 
 2. GRANT OF RIGHTS
 
-a) Subject to the terms of this Agreement, each Contributor hereby grants
-Recipient a non-exclusive, worldwide, royalty-free copyright license to
-reproduce, prepare derivative works of, publicly display, publicly perform,
-distribute and sublicense the Contribution of such Contributor, if any, and
-such derivative works, in source code and object code form.
+A. Under Non-Patent Rights: Subject to the terms and conditions of
+this Agreement, each Contributor, with respect to its own contribution
+to the Subject Software, hereby grants to each Recipient a
+non-exclusive, world-wide, royalty-free license to engage in the
+following activities pertaining to the Subject Software:
 
-b) Subject to the terms of this Agreement, each Contributor hereby grants
-Recipient a non-exclusive, worldwide, royalty-free patent license under
-Licensed Patents to make, use, sell, offer to sell, import and otherwise
-transfer the Contribution of such Contributor, if any, in source code and
-object code form.  This patent license shall apply to the combination of the
-Contribution and the Program if, at the time the Contribution is added by the
-Contributor, such addition of the Contribution causes such combination to be
-covered by the Licensed Patents. The patent license shall not apply to any
-other combinations which include the Contribution. No hardware per se is
-licensed hereunder.
+1. Use
+2. Distribution
+3. Reproduction
+4. Modification
+5. Redistribution
+6. Display
 
-c) Recipient understands that although each Contributor grants the licenses
-to its Contributions set forth herein, no assurances are provided by any
-Contributor that the Program does not infringe the patent or other
-intellectual property rights of any other entity. Each Contributor disclaims
-any liability to Recipient for claims brought by any other entity based on
-infringement of intellectual property rights or otherwise. As a condition to
-exercising the rights and licenses granted hereunder, each Recipient hereby
-assumes sole responsibility to secure any other intellectual property rights
-needed, if any. For example, if a third party patent license is required to
-allow Recipient to distribute the Program, it is Recipient's responsibility
-to acquire that license before distributing the Program.
+B. Under Patent Rights: Subject to the terms and conditions of this
+Agreement, each Contributor, with respect to its own contribution to
+the Subject Software, hereby grants to each Recipient under Covered
+Patents a non-exclusive, world-wide, royalty-free license to engage in
+the following activities pertaining to the Subject Software:
 
-d) Each Contributor represents that to its knowledge it has sufficient
-copyright rights in its Contribution, if any, to grant the copyright license
-set forth in this Agreement.
+1. Use
+2. Distribution
+3. Reproduction
+4. Sale
+5. Offer for Sale
 
-3. REQUIREMENTS
+C. The rights granted under Paragraph B. also apply to the combination
+of a Contributor's Modification and the Subject Software if, at the
+time the Modification is added by the Contributor, the addition of
+such Modification causes the combination to be covered by the Covered
+Patents. It does not apply to any other combinations that include a
+Modification.
 
-A Contributor may choose to distribute the Program in object code form under
-its own license agreement, provided that:
+D. The rights granted in Paragraphs A. and B. allow the Recipient to
+sublicense those same rights. Such sublicense must be under the same
+terms and conditions of this Agreement.
 
-a) it complies with the terms and conditions of this Agreement; and
+3. OBLIGATIONS OF RECIPIENT
 
-b) its license agreement:
+A. Distribution or Redistribution of the Subject Software must be made
+under this Agreement except for additions covered under paragraph 3H.
 
-i) effectively disclaims on behalf of all Contributors all warranties and
-conditions, express and implied, including warranties or conditions of title
-and non-infringement, and implied warranties or conditions of merchantability
-and fitness for a particular purpose;
+1. Whenever a Recipient distributes or redistributes the Subject
+Software, a copy of this Agreement must be included with each copy
+of the Subject Software; and
+2. If Recipient distributes or redistributes the Subject Software in
+any form other than source code, Recipient must also make the
+source code freely available, and must provide with each copy of
+the Subject Software information on how to obtain the source code
+in a reasonable manner on or through a medium customarily used for
+software exchange.
 
-ii) effectively excludes on behalf of all Contributors all liability for
-damages, including direct, indirect, special, incidental and consequential
-damages, such as lost profits;
+B. Each Recipient must ensure that the following copyright notice
+appears prominently in the Subject Software:
 
-iii) states that any provisions which differ from this Agreement are offered
-by that Contributor alone and not by any other party; and
+Copyright 2012 United States Government
+No copyright is claimed in the United
+States under Title 17, U.S.Code. All Other Rights Reserved.
 
-iv) states that source code for the Program is available from such
-Contributor, and informs licensees how to obtain it in a reasonable manner on
-or through a medium customarily used for software exchange.
+C. Each Contributor must characterize its alteration of the Subject
+Software as a Modification and must identify itself as the originator
+of its Modification in a manner that reasonably allows subsequent
+Recipients to identify the originator of the Modification. In
+fulfillment of these requirements, Contributor must include a file
+(e.g., a change log file) that describes the alterations made and the
+date of the alterations, identifies Contributor as originator of the
+alterations, and consents to characterization of the alterations as a
+Modification, for example, by including a statement that the
+Modification is derived, directly or indirectly, from Original
+Software provided by Government Agency. Once consent is granted, it
+may not thereafter be revoked.
 
-When the Program is made available in source code form:
+D. A Contributor may add its own copyright notice to the Subject
+Software. Once a copyright notice has been added to the Subject
+Software, a Recipient may not remove it without the express permission
+of the Contributor who added the notice.
 
-a) it must be made available under this Agreement; and
+E. A Recipient may not make any representation in the Subject Software
+or in any promotional, advertising or other material that may be
+construed as an endorsement by Government Agency or by any prior
+Recipient of any product or service provided by Recipient, or that may
+seek to obtain commercial advantage by the fact of Government Agency's
+or a prior Recipient's participation in this Agreement.
 
-b) a copy of this Agreement must be included with each copy of the Program.
+F. In an effort to track usage and maintain accurate records of the
+Subject Software, each Recipient, upon receipt of the Subject
+Software, is requested to register with Government Agency by visiting
+the following website:http://landsat.usgs.gov/contactus.php. Recipient's
+name and personal information shall be used for statistical purposes
+only. Once a Recipient makes a Modification available, it is requested
+that the Recipient inform Government Agency at the web site provided
+above how to access the Modification.
 
-Contributors may not remove or alter any copyright notices contained within
-the Program.
+G. Each Contributor represents that that its Modification is believed
+to be Contributor's original creation and does not violate any
+existing agreements, regulations, statutes or rules, and further that
+Contributor has sufficient rights to grant the rights conveyed by this
+Agreement.
 
-Each Contributor must identify itself as the originator of its Contribution,
-if any, in a manner that reasonably allows subsequent Recipients to identify
-the originator of the Contribution.
+H. A Recipient may choose to offer, and to charge a fee for, warranty,
+support, indemnity and/or liability obligations to one or more other
+Recipients of the Subject Software. A Recipient may do so, however,
+only on its own behalf and not on behalf of Government Agency or any
+other Recipient. Such a Recipient must make it absolutely clear that
+any such warranty, support, indemnity and/or liability obligation is
+offered by that Recipient alone. Further, such Recipient agrees to
+indemnify Government Agency and every other Recipient for any
+liability incurred by them as a result of warranty, support, indemnity
+and/or liability offered by such Recipient.
 
-4. COMMERCIAL DISTRIBUTION
+I. A Recipient may create a Larger Work by combining Subject Software
+with separate software not governed by the terms of this agreement and
+distribute the Larger Work as a single product. In such case, the
+Recipient must make sure Subject Software, or portions thereof,
+included in the Larger Work is subject to this Agreement.
 
-Commercial distributors of software may accept certain responsibilities with
-respect to end users, business partners and the like. While this license is
-intended to facilitate the commercial use of the Program, the Contributor who
-includes the Program in a commercial product offering should do so in a
-manner which does not create potential liability for other Contributors.
-Therefore, if a Contributor includes the Program in a commercial product
-offering, such Contributor ("Commercial Contributor") hereby agrees to defend
-and indemnify every other Contributor ("Indemnified Contributor") against any
-losses, damages and costs (collectively "Losses") arising from claims,
-lawsuits and other legal actions brought by a third party against the
-Indemnified Contributor to the extent caused by the acts or omissions of such
-Commercial Contributor in connection with its distribution of the Program in
-a commercial product offering.  The obligations in this section do not apply
-to any claims or Losses relating to any actual or alleged intellectual
-property infringement. In order to qualify, an Indemnified Contributor must:
-a) promptly notify the Commercial Contributor in writing of such claim, and
-b) allow the Commercial Contributor tocontrol, and cooperate with the
-Commercial Contributor in, the defense and any related settlement
-negotiations. The Indemnified Contributor may participate in any such claim
-at its own expense.
+J. Notwithstanding any provisions contained herein, Recipient is
+hereby put on notice that export of any goods or technical data from
+the United States may require some form of export license from the
+U.S. Government. Failure to obtain necessary export licenses may
+result in criminal liability under U.S. laws. Government Agency
+neither represents that a license shall not be required nor that, if
+required, it shall be issued. Nothing granted herein provides any
+such export license.
 
-For example, a Contributor might include the Program in a commercial product
-offering, Product X. That Contributor is then a Commercial Contributor. If
-that Commercial Contributor then makes performance claims, or offers
-warranties related to Product X, those performance claims and warranties are
-such Commercial Contributor's responsibility alone. Under this section, the
-Commercial Contributor would have to defend claims against the other
-Contributors related to those performance claims and warranties, and if a
-court requires any other Contributor to pay any damages as a result, the
-Commercial Contributor must pay those damages.
+4. DISCLAIMER OF WARRANTIES AND LIABILITIES; WAIVER AND INDEMNIFICATION
 
-5. NO WARRANTY
+A. No Warranty: THE SUBJECT SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY
+WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY,
+INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SUBJECT SOFTWARE
+WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR FREEDOM FROM
+INFRINGEMENT, ANY WARRANTY THAT THE SUBJECT SOFTWARE WILL BE ERROR
+FREE, OR ANY WARRANTY THAT DOCUMENTATION, IF PROVIDED, WILL CONFORM TO
+THE SUBJECT SOFTWARE. THIS AGREEMENT DOES NOT, IN ANY MANNER,
+CONSTITUTE AN ENDORSEMENT BY GOVERNMENT AGENCY OR ANY PRIOR RECIPIENT
+OF ANY RESULTS, RESULTING DESIGNS, HARDWARE, SOFTWARE PRODUCTS OR ANY
+OTHER APPLICATIONS RESULTING FROM USE OF THE SUBJECT SOFTWARE.
+FURTHER, GOVERNMENT AGENCY DISCLAIMS ALL WARRANTIES AND LIABILITIES
+REGARDING THIRD-PARTY SOFTWARE, IF PRESENT IN THE ORIGINAL SOFTWARE,
+AND DISTRIBUTES IT "AS IS."
 
-EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE PROGRAM IS PROVIDED ON
-AN "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER
-EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR
-CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A
-PARTICULAR PURPOSE. Each Recipient is solely responsible for determining the
-appropriateness of using and distributing the Program and assumes all risks
-associated with its exercise of rights under this Agreement , including but
-not limited to the risks and costs of program errors, compliance with
-applicable laws, damage to or loss of data, programs or equipment, and
-unavailability or interruption of operations.
+B. Waiver and Indemnity: RECIPIENT AGREES TO WAIVE ANY AND ALL CLAIMS
+AGAINST THE UNITED STATES GOVERNMENT, ITS CONTRACTORS AND
+SUBCONTRACTORS, AS WELL AS ANY PRIOR RECIPIENT. IF RECIPIENT'S USE OF
+THE SUBJECT SOFTWARE RESULTS IN ANY LIABILITIES, DEMANDS, DAMAGES,
+EXPENSES OR LOSSES ARISING FROM SUCH USE, INCLUDING ANY DAMAGES FROM
+PRODUCTS BASED ON, OR RESULTING FROM, RECIPIENT'S USE OF THE SUBJECT
+SOFTWARE, RECIPIENT SHALL INDEMNIFY AND HOLD HARMLESS THE UNITED
+STATES GOVERNMENT, ITS CONTRACTORS AND SUBCONTRACTORS, AS WELL AS ANY
+PRIOR RECIPIENT, TO THE EXTENT PERMITTED BY LAW. RECIPIENT'S SOLE
+REMEDY FOR ANY SUCH MATTER SHALL BE THE IMMEDIATE, UNILATERAL
+TERMINATION OF THIS AGREEMENT.
 
-6. DISCLAIMER OF LIABILITY
+5. GENERAL TERMS
 
-EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, NEITHER RECIPIENT NOR ANY
-CONTRIBUTORS SHALL HAVE ANY LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING WITHOUT LIMITATION
-LOST PROFITS), HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OR DISTRIBUTION OF THE PROGRAM OR THE
-EXERCISE OF ANY RIGHTS GRANTED HEREUNDER, EVEN IF ADVISED OF THE POSSIBILITY
-OF SUCH DAMAGES.
+A. Termination: This Agreement and the rights granted hereunder will
+terminate automatically if a Recipient fails to comply with these
+terms and conditions, and fails to cure such noncompliance within
+thirty (30) days of becoming aware of such noncompliance. Upon
+termination, a Recipient agrees to immediately cease use and
+distribution of the Subject Software. All sublicenses to the Subject
+Software properly granted by the breaching Recipient shall survive any
+such termination of this Agreement.
 
-7. GENERAL
+B. Severability: If any provision of this Agreement is invalid or
+unenforceable under applicable law, it shall not affect the validity
+or enforceability of the remainder of the terms of this Agreement.
 
-If any provision of this Agreement is invalid or unenforceable under
-applicable law, it shall not affect the validity or enforceability of the
-remainder of the terms of this Agreement, and without further action by the
-parties hereto, such provision shall be reformed to the minimum extent
-necessary to make such provision valid and enforceable.
+C. Applicable Law: This Agreement shall be subject to United States
+federal law only for all purposes, including, but not limited to,
+determining the validity of this Agreement, the meaning of its
+provisions and the rights, obligations and remedies of the parties.
 
-If Recipient institutes patent litigation against any entity (including a
-cross-claim or counterclaim in a lawsuit) alleging that the Program itself
-(excluding combinations of the Program with other software or hardware)
-infringes such Recipient's patent(s), then such Recipient's rights granted
-under Section 2(b) shall terminate as of the date such litigation is filed.
+D. Entire Understanding: This Agreement constitutes the entire
+understanding and agreement of the parties relating to release of the
+Subject Software and may not be superseded, modified or amended except
+by further written agreement duly executed by the parties.
 
-All Recipient's rights under this Agreement shall terminate if it fails to
-comply with any of the material terms or conditions of this Agreement and
-does not cure such failure in a reasonable period of time after becoming
-aware of such noncompliance. If all Recipient's rights under this Agreement
-terminate, Recipient agrees to cease use and distribution of the Program as
-soon as reasonably practicable. However, Recipient's obligations under this
-Agreement and any licenses granted by Recipient relating to the Program shall
-continue and survive.
+E. Binding Authority: By accepting and using the Subject Software
+under this Agreement, a Recipient affirms its authority to bind the
+Recipient to all terms and conditions of this Agreement and that that
+Recipient hereby agrees to all terms and conditions herein.
 
-Everyone is permitted to copy and distribute copies of this Agreement, but in
-order to avoid inconsistency the Agreement is copyrighted and may only be
-modified in the following manner. The Agreement Steward reserves the right to
-publish new versions (including revisions) of this Agreement from time to
-time. No one other than the Agreement Steward has the right to modify this
-Agreement. The Eclipse Foundation is the initial Agreement Steward. The
-Eclipse Foundation may assign the responsibility to serve as the Agreement
-Steward to a suitable separate entity. Each new version of the Agreement will
-be given a distinguishing version number. The Program (including
-Contributions) may always be distributed subject to the version of the
-Agreement under which it was received. In addition, after a new version of
-the Agreement is published, Contributor may elect to distribute the Program
-(including its Contributions) under the new version. Except as expressly
-stated in Sections 2(a) and 2(b) above, Recipient receives no rights or
-licenses to the intellectual property of any Contributor under this
-Agreement, whether expressly, by implication, estoppel or otherwise. All
-rights in the Program not expressly granted under this Agreement are
-reserved.
-
-This Agreement is governed by the laws of the State of New York and the
-intellectual property laws of the United States of America. No party to this
-Agreement will bring a legal action under this Agreement more than one year
-after the cause of action arose. Each party waives its rights to a jury trial
-in any resulting litigation.
+F. Point of Contact: Any Recipient contact with Government Agency is
+to be directed to the designated representative as follows:
