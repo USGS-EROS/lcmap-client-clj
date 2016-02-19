@@ -26,7 +26,7 @@ $ lein repl
 ```
 
 ```clojure
-user=> (require '[lcmap-client.l8.surface-reflectance :as sr])
+user=> (require '[lcmap.client.l8.surface-reflectance :as sr])
 nil
 user=> (sr/get-resources)
 "{\"links\":[\"/api/L1/T/Landsat/8/SurfaceReflectance/:tiles\",

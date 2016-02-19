@@ -16,4 +16,4 @@
                  [clojure-ini "0.0.2"]
                  [twig "0.1.4"]
                  [org.clojure/tools.namespace "0.2.11"]]
-  :repl-options {:init-ns lcmap-client.dev})
+  :repl-options {:init-ns lcmap.client.dev})
