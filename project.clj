@@ -1,4 +1,4 @@
-(defproject gov.usgs.eros/lcmap-client-clj "0.0.1"
+(defproject gov.usgs.eros/lcmap-client-clj "0.0.2-SNAPSHOT"
   :description "Clojure Client for USGS LCMAP REST Service"
   :url "https://github.com/USGS-EROS/lcmap-client-clj"
   :license {:name "NASA Open Source Agreement, Version 1.3"
