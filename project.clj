@@ -14,6 +14,13 @@
                  [dire "0.5.3"]
                  [leiningen-core "2.5.3"]
                  [clojure-ini "0.0.2"]
-                 [twig "0.1.4"]
-                 [org.clojure/tools.namespace "0.2.11"]]
-  :repl-options {:init-ns lcmap.client.dev})
+                 [twig "0.1.4"]]
+  :repl-options {:init-ns lcmap.client.dev}
+  :profiles {
+    :dev {
+      :dependencies [[org.clojure/tools.namespace "0.2.11"]
+                     [pandect "0.5.4"]
+                     [slamhound "1.5.5"]]
+      :plugins [[lein-kibit "0.1.2"]]
+      :aliases {"slamhound" ["run" "-m" "slam.hound"]}
+      :source-paths ["dev-resources/src"]}})
