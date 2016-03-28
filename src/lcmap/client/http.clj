@@ -24,7 +24,7 @@
 ;;;; this up.
 
 (def context "/api")
-(def server-version "1.0")
+(def server-version "0.5")
 (def default-content-type "json")
 (def vendor "vnd.usgs.lcmap")
 ;; XXX once the service goes live, the endpoint will be something like
