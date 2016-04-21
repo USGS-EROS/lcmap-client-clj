@@ -46,11 +46,9 @@
                       :return :body
                       :debug false})
 
-(defn response [& {:keys [result errors status]
-                   :or {result nil errors [] status 200}
-                   :as args}]
-  {:result result :errors errors :status status})
-
+(defn response [& {:keys [result errors]
+                   :or {result nil errors []}}]
+  {:result result :errors errors})
 
 (defn format-accept [vendor version content-type]
   ;; XXX split content-type with "/" and use below, e.g.: "application/json"
