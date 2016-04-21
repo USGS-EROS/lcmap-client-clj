@@ -4,4 +4,5 @@
             [lcmap.client.lcmap :as lcmap]))
 
 (def context (str lcmap/context "/system"))
-
+(def metrics (str context "/metrics"))
+(def reference (str context "/reference"))
