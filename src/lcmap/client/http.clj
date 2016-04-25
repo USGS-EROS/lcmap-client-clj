@@ -76,10 +76,12 @@
     (let [api-version (or version
                           (config/get-version server-version))
           api-content-type (or content-type
-                               (config/get-content-type default-content-type))]
-     {:user-agent user-agent
-      :accept (format-accept vendor api-version api-content-type)
-      :x-authtoken token})))
+                               (config/get-content-type default-content-type))
+          accept (format-accept vendor api-version api-content-type)]
+      (log/debug "Request Accept:" accept)
+      {:user-agent user-agent
+       :accept accept
+       :x-authtoken token})))
 
 (defn get-http-func [method]
   (case method
