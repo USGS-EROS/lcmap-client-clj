@@ -46,8 +46,11 @@
                       :return :body
                       :debug false})
 
-(defn response [& {:keys [result errors]
-                   :or {result nil errors []}}]
+(defn response
+  "This primary purpose of this function is to codify a standard data
+  structure for LCMAP HTTP responses, used by both the Clojure client as well
+  as several server-side components."
+  [& {:keys [result errors] :or {result nil errors []}}]
   {:result result :errors errors})
 
 (defn format-accept [vendor version content-type]
