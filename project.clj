@@ -14,7 +14,7 @@
                  [dire "0.5.3"]
                  [leiningen-core "2.5.3"]
                  [clojure-ini "0.0.2"]
-                 [twig "0.1.4"]]
+                 [twig "0.1.6"]]
   :repl-options {:init-ns lcmap.client.dev}
   :profiles {
     :dev {
