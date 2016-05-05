@@ -23,4 +23,7 @@
                      [slamhound "1.5.5"]]
       :plugins [[lein-kibit "0.1.2"]]
       :aliases {"slamhound" ["run" "-m" "slam.hound"]}
-      :source-paths ["dev-resources/src"]}})
+      :source-paths ["dev-resources/src"]}
+    :testing {
+      :env {
+        :log-level :info}}})
