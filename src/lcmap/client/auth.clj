@@ -7,11 +7,15 @@
 ;; Note that the client endpoint is defined  using the "/api" prefix, so the
 ;; following context is appended to that.
 
+;;; Functions in this namespace do not use components, so they
+;;; have no other way to get config... yet.
+(def auth-config (-> (config/init {}) :lcmap.client.auth))
+
 (def context (str lcmap/context "/auth"))
 
 (defn login [& {:keys [username password]
-                :or {username (config/get-username)
-                     password (config/get-password)}
+                :or {username (auth-config :username)
+                     password (auth-config :password)}
                 :as args}]
   (http/post (str context "/login")
              :clj-http-opts {:form-params {:username username

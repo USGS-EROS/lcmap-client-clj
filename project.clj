@@ -1,4 +1,4 @@
-(defproject gov.usgs.eros/lcmap-client-clj "0.0.2-SNAPSHOT"
+(defproject gov.usgs.eros/lcmap-client-clj "0.5.0-SNAPSHOT"
   :description "Clojure Client for USGS LCMAP REST Service"
   :url "https://github.com/USGS-EROS/lcmap-client-clj"
   :license {:name "NASA Open Source Agreement, Version 1.3"
@@ -14,7 +14,8 @@
                  [dire "0.5.3"]
                  [leiningen-core "2.5.3"]
                  [clojure-ini "0.0.2"]
-                 [twig "0.1.6"]]
+                 [twig "0.1.6"]
+                 [gov.usgs.eros/lcmap-config "0.5.0-SNAPSHOT"]]
   :repl-options {:init-ns lcmap.client.dev}
   :profiles {
     :dev {
