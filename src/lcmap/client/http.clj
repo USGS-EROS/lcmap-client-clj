@@ -16,7 +16,8 @@
             [leiningen.core.project :as lein]
             [lcmap.client.config :as config]
             [lcmap.client.status-codes :as status]
-            [lcmap.client.util :as util])
+            [lcmap.client.util :as util]
+            [lcmap.config.helpers :refer [init-cfg]])
   (:refer-clojure :exclude [get]))
 
 ;;;; XXX The first implementation of this is a bit messy, as it grew while we
@@ -25,7 +26,7 @@
 
 ;;; Functions in this namespace do not use components, so they
 ;;; have no other way to get config... yet.
-(def http-config (-> (config/init {}) :lcmap.client.http))
+(def http-config (-> (init-cfg config/defaults) :lcmap.client.http))
 
 (def context "/api")
 (def server-version "0.5")
