@@ -3,8 +3,37 @@
             [clojure.java.io :as io]
             [clojure.string :as string]
             [clojure.tools.logging :as log]
-            [clojure-ini.core :as ini])
+            [clojure-ini.core :as ini]
+            [lcmap.config.helpers :as cfg]
+            [schema.core :as schema])
   (:refer-clojure :exclude [read]))
+
+;; CLI options for config only, not command parameters for CLI tools!
+(def opt-spec [])
+
+(def http-cfg-schema
+  {schema/Keyword schema/Str})
+
+(def cfg-schema
+  {:lcmap.client.http http-cfg-schema
+   ;; permits configs maps for other components
+   schema/Keyword schema/Any})
+
+(defn init
+  "Produce a validated configuration map. When configuration is
+  built in the context of another system, you may want to compose
+  a schema for only the components you will use."
+  [{:keys [path spec args schema]
+    :or   {path (clojure.java.io/file (System/getenv "HOME") ".usgs" "lcmap.ini")
+           spec opt-spec
+           args *command-line-args*
+           schema cfg-schema}}]
+  (cfg/init-cfg {:ini  path
+                 :args args
+                 :spec spec
+                 :schema schema}))
+
+;;; Original Implementation
 
 (def env-prefix "LCMAP")
 (def home (System/getProperty "user.home"))

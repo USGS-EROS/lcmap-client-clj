@@ -4,22 +4,21 @@
 (ns lcmap.client.components.config
   (:require [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
-            [lcmap.client.config :as config]
-            [lcmap.client.util :as util]))
+            [lcmap.client.config :as config]))
 
-(defrecord Configuration []
+(defrecord Configuration [cfg-opts]
   component/Lifecycle
 
   (start [component]
     (log/info "Setting up LCMAP client configuration ...")
-    (let [cfg ((config/read) (keyword "LCMAP Client"))]
+    (let [cfg-map (config/init cfg-opts)]
       (log/debug "Successfully generated LCMAP client configuration.")
-      cfg))
+      (merge component cfg-map)))
 
   (stop [component]
     (log/info "Tearing down LCMAP configuration ...")
     (log/debug "Component keys" (keys component))
-    (assoc component :cfg nil)))
+    (assoc component :cfg-opts nil)))
 
-(defn new-configuration []
-  (->Configuration))
+(defn new-configuration [cfg-opts]
+  (->Configuration cfg-opts))
