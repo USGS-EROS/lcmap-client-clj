@@ -18,6 +18,9 @@
   :repl-options {:init-ns lcmap.client.dev}
   :profiles {
     :dev {
+      :env {
+        :log-level :trace
+        :logging-namespaces [lcmap.client]}
       :dependencies [[org.clojure/tools.namespace "0.2.11"]
                      [pandect "0.5.4"]
                      [slamhound "1.5.5"]]
