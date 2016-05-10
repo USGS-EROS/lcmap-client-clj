@@ -98,11 +98,6 @@
     :move #'http/move
     :patch #'http/patch))
 
-(defn get-clj-http-opts [opts & {:keys [debug]}]
-  (if debug
-    (into opts [util/debug])
-    opts))
-
 (defn update-lcmap-opts
   "This combines the options specific to the LCMAP client in the following
   order of precedence:
@@ -116,10 +111,13 @@
     (log/trace "Got new opts:" new-opts)
     new-opts))
 
-(defn combine-http-opts [opts headers request & {:keys [debug]}]
-  (let [opts (get-clj-http-opts opts :debug debug)
-        request (util/deep-merge request {:headers headers})]
-    (util/deep-merge request opts)))
+(defn combine-http-opts [opts headers request & args]
+  (log/tracef "Merging the following:\n%s\n%s\n%s\n%s"
+              opts headers request args)
+  (-> opts
+      (util/deep-merge headers)
+      (util/deep-merge request)
+      (util/deep-merge (apply hash-map args))))
 
 (defn get-keywords [args]
   (util/remove-nil
@@ -158,7 +156,9 @@
       :raw result
       :body (:body (json/read-str (:body result) :key-fn keyword))
       :result (get-in (json/read-str (:body result) :key-fn keyword)
-                      [:body :result]))))
+                      [:body :result])
+      :errors (get-in (json/read-str (:body result) :key-fn keyword)
+                      [:body :errors]))))
 
 (defn get [path & args]
   (http-call :get path args))
@@ -197,7 +197,7 @@
       :client client
       :lcmap-opts (or args {}))))
 
-;;; Exception Handling              ;;
+;;; Exception Handling
 
 (with-handler! #'http-call
   [:status status/no-resource]
@@ -208,4 +208,3 @@
      :errors ["Resource not found"]
      :headers (:headers e)
      :args args}))
-
