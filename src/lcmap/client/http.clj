@@ -153,10 +153,12 @@
 (defn http-call [method path args]
   (let [{result :result
          return :return} (apply -http-call (into [method path] args))]
-    (log/tracef "For return type %s, got result:" return result)
-    (if (= return :body)
-        (json/read-str (:body result) :key-fn keyword)
-        result)))
+    (log/tracef "For return type %s, got result: %s" return result)
+    (case return
+      :raw result
+      :body (:body (json/read-str (:body result) :key-fn keyword))
+      :result (get-in (json/read-str (:body result) :key-fn keyword)
+                      [:body :result]))))
 
 (defn get [path & args]
   (http-call :get path args))
