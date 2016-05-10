@@ -16,7 +16,7 @@
   (http/post (str context "/login")
              :clj-http-opts {:form-params {:username username
                                            :password password}}
-             :lcmap-opts (or args {})))
+             :lcmap-opts (assoc (or args {}) :return :result)))
 
 (defn get-token [client]
   (get-in client [:cred-mgr :creds :token]))
