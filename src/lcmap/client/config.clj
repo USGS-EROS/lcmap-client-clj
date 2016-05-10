@@ -4,24 +4,29 @@
             [clojure.string :as string]
             [clojure.tools.logging :as log]
             [clojure-ini.core :as ini]
+            [lcmap.config.helpers :refer :all]
             [schema.core :as schema])
   (:refer-clojure :exclude [read]))
 
 ;; CLI options for config only, not command parameters for CLI tools!
 (def opt-spec [])
 
-(def http-cfg-schema
-  {schema/Keyword schema/Str})
+(def client-schema
+  {:lcmap.client {:username schema/Str
+                  :password schema/Str
+                  :version schema/Str
+                  :endpoint schema/Str
+                  :content-type schema/Str
+                  schema/Keyword schema/Str}})
 
 (def cfg-schema
-  {:lcmap.client.http http-cfg-schema
-   ;; permits configs maps for other components
-   schema/Keyword schema/Any})
+  (merge client-schema
+         {schema/Keyword schema/Any})
 
 (def defaults
-  {:ini (clojure.java.io/file (System/getenv "HOME") ".usgs" "lcmap.ini")
-   :spec opt-spec
+  {:ini *lcmap-config-ini*
    :args *command-line-args*
+   :spec opt-spec
    :schema cfg-schema})
 
 ;;; Original Implementation
