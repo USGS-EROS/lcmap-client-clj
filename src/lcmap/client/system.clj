@@ -6,3 +6,7 @@
 (def context (str lcmap/context "/system"))
 (def metrics (str context "/metrics"))
 (def reference (str context "/reference"))
+
+(defn get-resources [& {keys [] :as args}]
+  (http/get (str context "/")
+            :lcmap-opts (or args {})))
