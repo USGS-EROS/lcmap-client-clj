@@ -26,7 +26,7 @@
 
 ;;; Functions in this namespace do not use components, so they
 ;;; have no other way to get config... yet.
-(def http-config (-> (init-cfg config/defaults) :lcmap.client.http))
+(def http-config (-> (init-cfg config/defaults) :lcmap.client))
 
 (def context "/api")
 (def server-version "0.5")
