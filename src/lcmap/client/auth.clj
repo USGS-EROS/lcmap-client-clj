@@ -7,7 +7,7 @@
 
 ;;; Functions in this namespace do not use components, so they
 ;;; have no other way to get config... yet.
-(def auth-config (-> (init-cfg config/defaults) :lcmap.client.auth))
+(def auth-config (-> (init-cfg config/defaults) :lcmap.client))
 
 ;; Note that the client endpoint is defined  using the "/api" prefix, so the
 ;; following context is appended to that.
