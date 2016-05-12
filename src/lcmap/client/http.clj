@@ -37,8 +37,7 @@
 ;;(def endpoint "http://lcmap.usgs.gov")
 
 (def endpoint (http-config :endpoint "http://localhost:1077"))
-
-(def client-version (System/getProperty "lcmap.client.version"))
+(def client-version (:version (lein/read)))
 
 (def project-url (:url (lein/read)))
 (def user-agent (str "LCMAP REST Client/"
