@@ -36,8 +36,8 @@
 ;; XXX once the service goes live, the endpoint will be something like
 ;;(def endpoint "http://lcmap.usgs.gov")
 
-
 (def endpoint (http-config :endpoint "http://localhost:1077"))
+
 (def client-version (System/getProperty "lcmap.client.version"))
 
 (def project-url (:url (lein/read)))
