@@ -8,4 +8,3 @@
 (defn get-resources [& {keys [] :as args}]
   (http/get (str context "/")
             :lcmap-opts (or args {})))
-

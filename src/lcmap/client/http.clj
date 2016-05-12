@@ -16,21 +16,29 @@
             [leiningen.core.project :as lein]
             [lcmap.client.config :as config]
             [lcmap.client.status-codes :as status]
-            [lcmap.client.util :as util])
+            [lcmap.client.util :as util]
+            [lcmap.config.helpers :refer [init-cfg]])
   (:refer-clojure :exclude [get]))
 
 ;;;; XXX The first implementation of this is a bit messy, as it grew while we
 ;;;; explored the use cases. We definitely need to come back here and clean
 ;;;; this up.
 
+;;; Functions in this namespace do not use components, so they
+;;; have no other way to get config... yet.
+(def http-config (-> (init-cfg config/defaults) :lcmap.client))
+
 (def context "/api")
 (def server-version "0.5")
 (def default-content-type "json")
 (def vendor "vnd.usgs.lcmap")
+
 ;; XXX once the service goes live, the endpoint will be something like
 ;;(def endpoint "http://lcmap.usgs.gov")
-(def endpoint (config/get-endpoint "http://localhost:1077"))
+
+(def endpoint (http-config :endpoint "http://localhost:1077"))
 (def client-version (:version (lein/read)))
+
 (def project-url (:url (lein/read)))
 (def user-agent (str "LCMAP REST Client/"
                      client-version
@@ -77,9 +85,9 @@
   ([version content-type token]
     (log/debug "Getting base headers ...")
     (let [api-version (or version
-                          (config/get-version server-version))
+                          (http-config :version server-version))
           api-content-type (or content-type
-                               (config/get-content-type default-content-type))
+                               (http-config :content-type default-content-type))
           accept (format-accept vendor api-version api-content-type)]
       (log/debug "Request Accept:" accept)
       {:user-agent user-agent
@@ -135,7 +143,7 @@
         token (or (get-in client [:cred-mgr :creds :token]) (:token opts))
         pool (get-in client [:conn-mgr :pool])
         http-func (get-http-func method)
-        url (str (or endpoint (config/get-endpoint)) path)
+        url (str (or endpoint (http-config :endpoint)) path)
         default-headers (get-base-headers version content-type token)
         request (combine-http-opts clj-http-opts
                                    (into default-headers headers)

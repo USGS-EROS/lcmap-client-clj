@@ -13,14 +13,15 @@
 (ns lcmap.client.components
   (:require [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
-            [lcmap.client.components.config :as config]
+            [lcmap.client.config]
             [lcmap.client.components.conn-mgr :as conn-mgr]
             [lcmap.client.components.cred-mgr :as cred-mgr]
-            [lcmap.client.components.logger :as logger]))
+            [lcmap.client.components.logger :as logger]
+            [lcmap.config.components.config :as config]))
 
 (defn init []
   (component/system-map
-    :cfg (config/new-configuration)
+    :cfg (config/new-configuration lcmap.client.config/defaults)
     :logger (component/using
               (logger/new-logger)
               [:cfg])

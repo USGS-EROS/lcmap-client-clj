@@ -3,8 +3,33 @@
             [clojure.java.io :as io]
             [clojure.string :as string]
             [clojure.tools.logging :as log]
-            [clojure-ini.core :as ini])
+            [clojure-ini.core :as ini]
+            [lcmap.config.helpers :refer :all]
+            [schema.core :as schema])
   (:refer-clojure :exclude [read]))
+
+;; CLI options for config only, not command parameters for CLI tools!
+(def opt-spec [])
+
+(def client-schema
+  {:lcmap.client {:username schema/Str
+                  :password schema/Str
+                  :version schema/Str
+                  :endpoint schema/Str
+                  :content-type schema/Str
+                  schema/Keyword schema/Str}})
+
+(def cfg-schema
+  (merge client-schema
+         {schema/Keyword schema/Any}))
+
+(def defaults
+  {:ini *lcmap-config-ini*
+   :args *command-line-args*
+   :spec opt-spec
+   :schema cfg-schema})
+
+;;; Original Implementation
 
 (def env-prefix "LCMAP")
 (def home (System/getProperty "user.home"))
