@@ -14,8 +14,9 @@
                  [dire "0.5.3"]
                  [leiningen-core "2.5.3"]
                  [clojure-ini "0.0.2"]
-                 [twig "0.1.6"]
-                 [gov.usgs.eros/lcmap-config "0.5.0-SNAPSHOT"]]
+                 ;; LCMAP Components
+                 [gov.usgs.eros/lcmap-config "0.5.0-SNAPSHOT"]
+                 [gov.usgs.eros/lcmap-logger "0.5.0-SNAPSHOT"]]
   :repl-options {:init-ns lcmap.client.dev}
   :profiles {
     :dev {

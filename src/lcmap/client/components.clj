@@ -16,8 +16,8 @@
             [lcmap.client.config]
             [lcmap.client.components.conn-mgr :as conn-mgr]
             [lcmap.client.components.cred-mgr :as cred-mgr]
-            [lcmap.client.components.logger :as logger]
-            [lcmap.config.components.config :as config]))
+            [lcmap.config.components.config :as config]
+            [lcmap.logger.components.logger :as logger]))
 
 (defn init []
   (component/system-map
