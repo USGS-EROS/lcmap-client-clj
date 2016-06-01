@@ -23,6 +23,7 @@
 
 ;; 5xx
 (def server-error 500)
+(def bad-gateway 502)
 
 ;;; Status code predicates
 
