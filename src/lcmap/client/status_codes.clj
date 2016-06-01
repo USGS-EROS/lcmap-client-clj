@@ -35,11 +35,11 @@
 (defn permanant-link? [status] (= status permanant-link))
 
 ;; 4xx
-(defn bad-request?[status] (= status bad-request))
-(defn client-error?[status] (= status client-error))
-(defn unauthorized?[status] (= status unauthorized))
-(defn forbidden?[status] (= status forbidden))
-(defn forbidden?[status] (= status forbidden))
+(defn bad-request? [status] (= status bad-request))
+(defn client-error? [status] (= status client-error))
+(defn unauthorized? [status] (= status unauthorized))
+(defn forbidden? [status] (= status forbidden))
+(defn forbidden? [status] (= status forbidden))
 (defn not-found? [status] (= status not-found))
 (defn no-resource? [status] (= status no-resource))
 (defn auth-timeout? [status] (= status auth-timeout))
