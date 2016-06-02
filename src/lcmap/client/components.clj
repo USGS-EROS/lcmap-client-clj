@@ -13,7 +13,7 @@
 (ns lcmap.client.components
   (:require [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
-            [lcmap.client.config]
+            [lcmap.client.config :as client-config]
             [lcmap.client.components.conn-mgr :as conn-mgr]
             [lcmap.client.components.cred-mgr :as cred-mgr]
             [lcmap.config.components.config :as config]
@@ -21,7 +21,7 @@
 
 (defn init []
   (component/system-map
-    :cfg (config/new-configuration lcmap.client.config/defaults)
+    :cfg (config/new-configuration client-config/defaults)
     :logger (component/using
               (logger/new-logger)
               [:cfg])

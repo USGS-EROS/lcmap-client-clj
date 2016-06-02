@@ -85,7 +85,6 @@
 (defn reset []
   (stop)
   (deinit)
-  (config/read :force-reload)
   (refresh :after 'lcmap.client.dev/run))
 
 (def reload #'reset)
