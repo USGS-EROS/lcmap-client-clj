@@ -23,7 +23,7 @@
       :env {
         :log-level :trace
         :logging-namespaces [lcmap.client]}
-      :dependencies [[org.clojure/tools.namespace "0.2.11"]
+      :dependencies [[org.clojure/tools.namespace "0.3.0-alpha3"]
                      [pandect "0.5.4"]
                      [slamhound "1.5.5"]]
       :plugins [[lein-kibit "0.1.2"]]
