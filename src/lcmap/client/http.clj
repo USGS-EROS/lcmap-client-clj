@@ -1,4 +1,4 @@
-(ns ^{:doc
+(ns lcmap.client.http
   "Our little http client needs to be able to handle three sets of options:
    * those intended for lcmap-rest itself
    * those that get passed to the underlying clj-http client library
@@ -6,8 +6,7 @@
   the request
 
   As such, we have provided wrapper functions for clj-http that allow us to
-  keep each of these separate from the others."}
-  lcmap.client.http
+  keep each of these separate from the others."
   (:require [clojure.data.json :as json]
             [clojure.string :as string]
             [clojure.tools.logging :as log]
@@ -26,7 +25,7 @@
 
 ;;; Functions in this namespace do not use components, so they
 ;;; have no other way to get config... yet.
-(def http-config (-> (init-cfg config/defaults) :lcmap.client))
+(def ^:dynamic *http-config* (-> (init-cfg config/defaults) :lcmap.client))
 
 (def context "/api")
 (def server-version "0.5")
@@ -36,7 +35,7 @@
 ;; XXX once the service goes live, the endpoint will be something like
 ;;(def endpoint "http://lcmap.usgs.gov")
 
-(def endpoint (http-config :endpoint "http://localhost:1077"))
+(def endpoint (*http-config* :endpoint "http://localhost:1077"))
 (def client-version (:version (lein/read)))
 
 (def project-url (:url (lein/read)))
@@ -85,9 +84,9 @@
   ([version content-type token]
     (log/debug "Getting base headers ...")
     (let [api-version (or version
-                          (http-config :version server-version))
+                          (*http-config* :version server-version))
           api-content-type (or content-type
-                               (http-config :content-type default-content-type))
+                               (*http-config* :content-type default-content-type))
           accept (format-accept vendor api-version api-content-type)]
       (log/debug "Request Accept:" accept)
       {:user-agent user-agent
@@ -143,7 +142,7 @@
         token (or (get-in client [:cred-mgr :creds :token]) (:token opts))
         pool (get-in client [:conn-mgr :pool])
         http-func (get-http-func method)
-        url (str (or endpoint (http-config :endpoint)) path)
+        url (str (or endpoint (*http-config* :endpoint)) path)
         default-headers (get-base-headers version content-type token)
         request (combine-http-opts clj-http-opts
                                    (into default-headers headers)
