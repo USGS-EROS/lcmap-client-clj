@@ -1,4 +1,5 @@
-(ns lcmap.client.status-codes)
+(ns lcmap.client.status-codes
+  "")
 
 ;;; Status code aliases
 
