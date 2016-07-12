@@ -1,37 +1,49 @@
-# lcmap-client-clj
+# lcmap.client (Clojure)
+
+*LCMAP REST Service Client for Clojure*
+
+
 [![Build Status][travis-badge]][travis][![Dependencies Status][deps-badge]][deps][![Clojars Project][clojars-badge]][clojars]
 
 [![LCMAP open source project logo][lcmap-logo]][lcmap-logo-large]
-
-LCMAP REST Service Client for Clojure
 
 **IMPORTANT**: This project is under active development and should be
 considered a work-in-progress.
 
 
-## Configuration
+#### Contents
+
+* [Configuration](#configuration-)
+* [Documentation](#documentation-)
+* [Example Usage](#example-usage-)
+* [License](#license-)
+
+
+## Configuration [&#x219F;](#contents)
 
 Client library configuration is done using a Config/INI file. See the
+`lcmap.ini` file in the `examples` directory.
 
 
-## Documentation
+## Documentation [&#x219F;](#contents)
 
 Full documentation for all LCMAP clients is available here:
  * http://usgs-eros.github.io/lcmap-client-docs/current/
 
-Note that per-client usage and example code is selectable via tabs in the upper-right of that page.
+Note that per-client usage and example code is selectable via tabs in the
+upper-right of that page.
 
 
-## Example Usage
+## Example Usage [&#x219F;](#contents)
 
 Starting:
 
-```bash
+```
 $ cd lcmap-client-clj
 $ lein repl
 ```
 
-```clojure
+```clj
 user=> (require '[lcmap.client.l8.surface-reflectance :as sr])
 nil
 user=> (sr/get-resources)
@@ -47,17 +59,18 @@ TBD
 
 To explicitly set the version number of the REST service API:
 
-```clojure
+```clj
 user=> (sr/get-resources :version 2.0)
 ```
 
 To generate debug output:
 
-```clojure
+```clj
 user=> (sr/get-resources :debug true)
 ```
 
-## License
+
+## License [&#x219F;](#contents)
 
 Copyright © 2015 United States Government
 
