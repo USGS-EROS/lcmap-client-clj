@@ -5,11 +5,14 @@
 
 LCMAP REST Service Client for Clojure
 
-[Very WIP ... not ready for use]
+**IMPORTANT**: This project is under active development and should be
+considered a work-in-progress.
+
 
 ## Configuration
 
 Client library configuration is done using a Config/INI file. See the
+
 
 ## Documentation
 
