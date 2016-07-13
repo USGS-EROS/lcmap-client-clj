@@ -19,6 +19,14 @@
                  [gov.usgs.eros/lcmap-config "0.5.0-SNAPSHOT"]
                  [gov.usgs.eros/lcmap-logger "0.5.0-SNAPSHOT"]]
   :repl-options {:init-ns lcmap.client.dev}
+  :plugins [[lein-codox "0.9.5"]]
+  :codox {:project {:name "lcmap.client (Clojure)"
+                    :description "LCMAP Client Library for Clojure"}
+          :namespaces [#"^lcmap.client\."]
+          :output-path "docs/master/current"
+          :doc-paths ["docs/source"]
+          :metadata {:doc/format :markdown
+                     :doc "Documentation forthcoming"}}
   :profiles {
     :dev {
       :env {
