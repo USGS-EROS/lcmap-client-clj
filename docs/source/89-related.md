@@ -4,11 +4,11 @@
 
 ### Clients for the LCMAP REST Server
 
+* [Documentation](http://usgs-eros.github.io/lcmap-client-docs/current/) (all clients)
 * [Python](https://github.com/USGS-EROS/lcmap-client-py) (Github project)
 * [Clojure](https://github.com/USGS-EROS/lcmap-client-clj) (Github project)
 * [Julia](https://github.com/USGS-EROS/lcmap-client-jl) (Github project)
 * [Jupyter notebooks](https://github.com/USGS-EROS/lcmap-test-notebooks) (Github project)
-* [Documentation](http://usgs-eros.github.io/lcmap-client-docs/current/) (all clients)
 
 
 ### LCMAP Infrastructure
