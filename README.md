@@ -33,6 +33,10 @@ Full documentation for all LCMAP clients is available here:
 Note that per-client usage and example code is selectable via tabs in the
 upper-right of that page.
 
+For the API reference of the Clojure client library, see the following:
+
+* [http://usgs-eros.github.io/lcmap-client-clj](http://usgs-eros.github.io/lcmap-client-clj)
+
 
 ## Example Usage [&#x219F;](#contents)
 
