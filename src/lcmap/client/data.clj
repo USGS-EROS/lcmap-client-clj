@@ -19,3 +19,15 @@
                                        :extent extent
                                        :time time
                                        :band band}})))
+
+(defn get-scene [& {:keys [scene] :as args}]
+  (let [args (apply dissoc args [:scene])]
+    (http/get (str context "/scenes")
+              :lcmap-opts args
+              :request {:query-params {:scene scene}})))
+
+(defn get-specs [& {:keys [band] :as args}]
+  (let [args (apply dissoc args [:band])]
+    (http/get (str context "/specs")
+              :lcmap-opts args
+              :request {:query-params {:band band}})))

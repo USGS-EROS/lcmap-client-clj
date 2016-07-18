@@ -82,8 +82,8 @@
   ([version content-type]
    (get-base-headers version content-type ""))
   ([version content-type token]
-    (log/debug "Getting base headers ...")
-    (let [api-version (or version
+   (log/debug "Getting base headers ...")
+   (let [api-version (or version
                           (*http-config* :version server-version))
           api-content-type (or content-type
                                (*http-config* :content-type default-content-type))
