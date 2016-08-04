@@ -1,16 +1,12 @@
 # lcmap.client (Clojure)
 
-*LCMAP REST Service Client for Clojure*
-
-
 [![Build Status][travis-badge]][travis][![Dependencies Status][deps-badge]][deps][![Clojars Project][clojars-badge]][clojars]
+
+*LCMAP REST Service Client for Clojure*
 
 [![LCMAP open source project logo][lcmap-logo]][lcmap-logo-large]
 
-**IMPORTANT**: This project is under active development and should be
-considered a work-in-progress.
-
-
+ 
 #### Contents
 
 * [Configuration](#configuration-)
