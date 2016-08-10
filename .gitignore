@@ -2,12 +2,10 @@ docs/master/current/*
 /target
 /classes
 /checkouts
-pom.xml
-pom.xml.asc
+pom.xml*
 *.jar
 *.class
 /.lein-*
-/.nrepl-port
-.hgignore
-.hg/
+/.nrepl-*
+.hg*
 *.clj~
