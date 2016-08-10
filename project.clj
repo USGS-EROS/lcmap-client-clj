@@ -1,4 +1,4 @@
-(defproject gov.usgs.eros/lcmap-client-clj "0.5.0"
+(defproject gov.usgs.eros/lcmap-client-clj "1.0.0-SNAPSHOT"
   :description "Clojure Client for USGS LCMAP REST Service"
   :url "https://github.com/USGS-EROS/lcmap-client-clj"
   :license {:name "NASA Open Source Agreement, Version 1.3"
@@ -13,8 +13,8 @@
                  [leiningen-core "2.6.1"]
                  [clojure-ini "0.0.2"]
                  ;; LCMAP Components
-                 [gov.usgs.eros/lcmap-config "0.5.0"]
-                 [gov.usgs.eros/lcmap-logger "0.5.0"]]
+                 [gov.usgs.eros/lcmap-config "1.0.0-SNAPSHOT"]
+                 [gov.usgs.eros/lcmap-logger "1.0.0-SNAPSHOT"]]
   :repl-options {:init-ns lcmap.client.dev}
   :plugins [[lein-codox "0.9.5"]]
   :codox {
@@ -28,6 +28,7 @@
       :doc/format :markdown
       :doc "Documentation forthcoming"}}
   :profiles {
+    :uberjar {:aot :all}
     :dev {
       :env {
         :log-level :trace
