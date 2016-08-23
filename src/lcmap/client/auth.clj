@@ -1,13 +1,12 @@
 (ns lcmap.client.auth
-  (:require [clojure.tools.logging :as log]
-            [lcmap.client.config :as config]
+  (:require [lcmap.client.config :as config]
             [lcmap.client.http :as http]
             [lcmap.client.lcmap :as lcmap]
             [lcmap.config.helpers :refer [init-cfg]]))
 
 ;;; Functions in this namespace do not use components, so they
 ;;; have no other way to get config... yet.
-(def auth-config (-> (init-cfg config/defaults) :lcmap.client))
+(def auth-config (:lcmap.client (init-cfg config/defaults)))
 
 ;; Note that the client endpoint is defined  using the "/api" prefix, so the
 ;; following context is appended to that.

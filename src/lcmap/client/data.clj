@@ -1,6 +1,5 @@
 (ns lcmap.client.data
-  (:require [clojure.tools.logging :as log]
-            [lcmap.client.http :as http]
+  (:require [lcmap.client.http :as http]
             [lcmap.client.lcmap :as lcmap]
             [lcmap.client.util :as util]))
 

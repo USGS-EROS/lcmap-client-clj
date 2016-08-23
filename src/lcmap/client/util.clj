@@ -1,6 +1,5 @@
 (ns lcmap.client.util
-  (:require [clojure.tools.logging :as log]
-            [clojure.string :as string]))
+  (:require [clojure.string :as string]))
 
 (def debug {:debug true
             :debug-body true

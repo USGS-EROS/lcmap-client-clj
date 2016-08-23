@@ -11,15 +11,12 @@
                  [clj-http "3.1.0"]
                  [dire "0.5.4"]
                  [leiningen-core "2.6.1"
-                   :exclusions [org.apache.maven.wagon/wagon-provider-api
-                                org.codehaus.plexus/plexus-utils]]
+                   :exclusions [org.apache.maven.wagon/wagon-provider-api]]
                  [clojure-ini "0.0.2"]
                  ;; LCMAP Components
-                 [gov.usgs.eros/lcmap-config "1.0.0-SNAPSHOT"
-                   :exclusions [org.codehaus.plexus/plexus-utils]]
+                 [gov.usgs.eros/lcmap-config "1.0.0-SNAPSHOT"]
                  [gov.usgs.eros/lcmap-logger "1.0.0-SNAPSHOT"
-                   :exclusions [org.codehaus.plexus/plexus-utils
-                                org.slf4j/slf4j-api
+                   :exclusions [org.slf4j/slf4j-api
                                 cheshire
                                 com.fasterxml.jackson.core/jackson-core
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-cbor

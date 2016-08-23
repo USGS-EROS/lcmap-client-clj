@@ -1,6 +1,5 @@
 (ns lcmap.client.core
-  (:require [clojure.tools.logging :as log]
-            [com.stuartsierra.component :as component]
+  (:require [com.stuartsierra.component :as component]
             [lcmap.client.components :as components]))
 
 (defn connect []

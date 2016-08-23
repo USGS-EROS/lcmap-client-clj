@@ -11,8 +11,7 @@
 ;;;;  * https://github.com/stuartsierra/component
 ;;;;  * https://www.youtube.com/watch?v=13cmHf_kt-Q
 (ns lcmap.client.components
-  (:require [clojure.tools.logging :as log]
-            [com.stuartsierra.component :as component]
+  (:require [com.stuartsierra.component :as component]
             [lcmap.client.config :as client-config]
             [lcmap.client.components.conn-mgr :as conn-mgr]
             [lcmap.client.components.cred-mgr :as cred-mgr]

@@ -1,8 +1,6 @@
 (ns lcmap.client.data.sample-os-process
-  (:require [clojure.tools.logging :as log]
-            [lcmap.client.http :as http]
-            [lcmap.client.data :as data]
-            [lcmap.client.lcmap :as lcmap]))
+  (:require [lcmap.client.http :as http]
+            [lcmap.client.data :as data]))
 
 (def context (str data/context "/sample/os-process"))
 

@@ -1,10 +1,5 @@
 (ns lcmap.client.config
-  (:require [clojure.core.memoize :as memo]
-            [clojure.java.io :as io]
-            [clojure.string :as string]
-            [clojure.tools.logging :as log]
-            [clojure-ini.core :as ini]
-            [lcmap.config.helpers :refer :all]
+  (:require [lcmap.config.helpers :refer :all]
             [lcmap.logger.config :as logger-cfg]
             [schema.core :as schema]))
 

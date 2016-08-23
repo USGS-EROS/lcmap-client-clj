@@ -25,7 +25,7 @@
 
 ;;; Functions in this namespace do not use components, so they
 ;;; have no other way to get config... yet.
-(def ^:dynamic *http-config* (-> (init-cfg config/defaults) :lcmap.client))
+(def ^:dynamic *http-config* (:lcmap.client (init-cfg config/defaults)))
 
 (def context "/api")
 (def server-version "0.5")
