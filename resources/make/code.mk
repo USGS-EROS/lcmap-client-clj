@@ -30,15 +30,19 @@ loc:
 check:
 	@lein with-profile +testing,-dev test
 
-lint:
-	@lein kibit
-	@lein eastwood "{:namespaces [:source-paths]}"
+kibit:
+	@lein with-profile +testing,-dev kibit
+
+eastwood:
+	@lein with-profile +testing,-dev eastwood "{:namespaces [:source-paths]}"
+
+lint: kibit eastwood
 
 lint-unused:
-	@lein eastwood "{:linters [:unused-fn-args :unused-locals :unused-namespaces :unused-private-vars :wrong-ns-form] :namespaces [:source-paths]}"
+	@lein with-profile +testing,-dev eastwood "{:linters [:unused-fn-args :unused-locals :unused-namespaces :unused-private-vars :wrong-ns-form] :namespaces [:source-paths]}"
 
 lint-ns:
-	@lein eastwood "{:linters [:unused-namespaces :wrong-ns-form] :namespaces [:source-paths]}"
+	@lein with-profile +testing,-dev eastwood "{:linters [:unused-namespaces :wrong-ns-form] :namespaces [:source-paths]}"
 
 run:
 	-@lein trampoline run
