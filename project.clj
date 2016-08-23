@@ -4,15 +4,12 @@
   :license {:name "NASA Open Source Agreement, Version 1.3"
             :url "http://ti.arc.nasa.gov/opensource/nosa/"}
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/core.match "0.3.0-alpha4"]
-                 [org.clojure/core.memoize "0.5.9"]
                  [org.clojure/data.json "0.2.6"]
                  [com.stuartsierra/component "0.3.1"]
                  [clj-http "3.1.0"]
                  [dire "0.5.4"]
                  [leiningen-core "2.6.1"
                    :exclusions [org.apache.maven.wagon/wagon-provider-api]]
-                 [clojure-ini "0.0.2"]
                  ;; LCMAP Components
                  [gov.usgs.eros/lcmap-config "1.0.0-SNAPSHOT"]
                  [gov.usgs.eros/lcmap-logger "1.0.0-SNAPSHOT"
@@ -22,7 +19,6 @@
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-cbor
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-smile]]]
   :repl-options {:init-ns lcmap.client.dev}
-  :plugins [[lein-codox "0.9.5"]]
   :codox {
     :project {
       :name "lcmap.client (Clojure)"
@@ -42,6 +38,7 @@
       :dependencies [[org.clojure/tools.namespace "0.3.0-alpha3"]
                      [pandect "0.6.0"]
                      [slamhound "1.5.5"]]
+      :plugins [[lein-codox "0.9.5"]]
       :aliases {"slamhound" ["run" "-m" "slam.hound"]}
       :source-paths ["dev-resources/src"]}
     :testing {
