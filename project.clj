@@ -38,7 +38,7 @@
       :dependencies [[org.clojure/tools.namespace "0.3.0-alpha3"]
                      [pandect "0.6.0"]
                      [slamhound "1.5.5"]]
-      :plugins [[lein-codox "0.9.5"]]
+      :plugins [[lein-codox "0.9.6"]]
       :aliases {"slamhound" ["run" "-m" "slam.hound"]}
       :source-paths ["dev-resources/src"]}
     :testing {
