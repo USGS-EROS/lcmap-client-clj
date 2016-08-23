@@ -10,11 +10,20 @@
                  [com.stuartsierra/component "0.3.1"]
                  [clj-http "3.1.0"]
                  [dire "0.5.4"]
-                 [leiningen-core "2.6.1"]
+                 [leiningen-core "2.6.1"
+                   :exclusions [org.apache.maven.wagon/wagon-provider-api
+                                org.codehaus.plexus/plexus-utils]]
                  [clojure-ini "0.0.2"]
                  ;; LCMAP Components
-                 [gov.usgs.eros/lcmap-config "1.0.0-SNAPSHOT"]
-                 [gov.usgs.eros/lcmap-logger "1.0.0-SNAPSHOT"]]
+                 [gov.usgs.eros/lcmap-config "1.0.0-SNAPSHOT"
+                   :exclusions [org.codehaus.plexus/plexus-utils]]
+                 [gov.usgs.eros/lcmap-logger "1.0.0-SNAPSHOT"
+                   :exclusions [org.codehaus.plexus/plexus-utils
+                                org.slf4j/slf4j-api
+                                cheshire
+                                com.fasterxml.jackson.core/jackson-core
+                                com.fasterxml.jackson.dataformat/jackson-dataformat-cbor
+                                com.fasterxml.jackson.dataformat/jackson-dataformat-smile]]]
   :repl-options {:init-ns lcmap.client.dev}
   :plugins [[lein-codox "0.9.5"]]
   :codox {
@@ -36,10 +45,10 @@
       :dependencies [[org.clojure/tools.namespace "0.3.0-alpha3"]
                      [pandect "0.6.0"]
                      [slamhound "1.5.5"]]
-      :plugins [[lein-kibit "0.1.2"]
-                [jonase/eastwood "0.2.3"]]
       :aliases {"slamhound" ["run" "-m" "slam.hound"]}
       :source-paths ["dev-resources/src"]}
     :testing {
+      :plugins [[lein-kibit "0.1.2" :exclusions [org.clojure/clojure]]
+                [jonase/eastwood "0.2.3"]]
       :env {
         :log-level :info}}})
