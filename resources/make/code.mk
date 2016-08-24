@@ -17,8 +17,11 @@ shell:
 repl:
 	@lein repl
 
+js:
+	@lein cljsbuild once dev
+
 simpleton:
-	-@lein simpleton $(JS_REPL_HTTP_PORT) file :from dev-resources/html &
+	-@lein simpleton $(JS_REPL_HTTP_PORT) file :from dev-resources/html/dev.html &
 
 repl-js: simpleton
 	@lein trampoline cljsbuild repl-launch $(JS_REPL_ID)
