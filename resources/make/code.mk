@@ -1,3 +1,6 @@
+JS_REPL_ID = "js-repl"
+JS_REPL_HTTP_PORT = 9001
+
 build: clean
 	@lein compile
 	@lein uberjar
@@ -13,6 +16,12 @@ shell:
 
 repl:
 	@lein repl
+
+simpleton:
+	-@lein simpleton $(JS_REPL_HTTP_PORT) file :from dev-resources/html &
+
+repl-js: simpleton
+	@lein trampoline cljsbuild repl-launch $(JS_REPL_ID)
 
 clean-all: clean clean-docs clean-docker
 
