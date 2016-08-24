@@ -4,6 +4,7 @@
   :license {:name "NASA Open Source Agreement, Version 1.3"
             :url "http://ti.arc.nasa.gov/opensource/nosa/"}
   :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojurescript "1.9.225"]
                  [org.clojure/data.json "0.2.6"]
                  [com.stuartsierra/component "0.3.1"]
                  [clj-http "3.1.0"]
@@ -19,6 +20,9 @@
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-cbor
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-smile]]]
   :repl-options {:init-ns lcmap.client.dev}
+  :prep-tasks ["compile" ["cljsbuild" "once"]]
+  :cljsbuild {
+    :builds []}
   :codox {
     :project {
       :name "lcmap.client (Clojure)"
@@ -38,7 +42,8 @@
       :dependencies [[org.clojure/tools.namespace "0.3.0-alpha3"]
                      [pandect "0.6.0"]
                      [slamhound "1.5.5"]]
-      :plugins [[lein-codox "0.9.6"]]
+      :plugins [[lein-cljsbuild "1.1.4"]
+                [lein-codox "0.9.6"]]
       :aliases {"slamhound" ["run" "-m" "slam.hound"]}
       :source-paths ["dev-resources/src"]}
     :testing {
