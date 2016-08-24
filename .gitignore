@@ -9,3 +9,5 @@ pom.xml*
 /.nrepl-*
 .hg*
 *.clj~
+out/*
+repl/*
