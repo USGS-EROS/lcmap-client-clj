@@ -20,8 +20,12 @@
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-cbor
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-smile]]]
   :repl-options {:init-ns lcmap.client.dev}
+  :plugins [[lein-simpleton "1.3.0"]]
   :prep-tasks ["compile" ["cljsbuild" "once"]]
   :cljsbuild {
+    :repl-listen-port 9000
+    :repl-launch-commands {
+      "js-repl" ["firefox" "-jsconsole" "http://localhost:9001/"]}
     :builds []}
   :codox {
     :project {
