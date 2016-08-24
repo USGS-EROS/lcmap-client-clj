@@ -19,6 +19,7 @@
                                 com.fasterxml.jackson.core/jackson-core
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-cbor
                                 com.fasterxml.jackson.dataformat/jackson-dataformat-smile]]]
+  :source-paths ["src/clj"]
   :repl-options {:init-ns lcmap.client.dev}
   :plugins [[lein-simpleton "1.3.0"]]
   :prep-tasks ["compile" ["cljsbuild" "once"]]
@@ -26,7 +27,11 @@
     :repl-listen-port 9000
     :repl-launch-commands {
       "js-repl" ["firefox" "-jsconsole" "http://localhost:9001/"]}
-    :builds []}
+    :builds [{:source-paths ["src/cljs"]
+              :compiler {:output-to "lcmap.js"}}
+             {:id "dev"
+              :source-paths ["dev-resources/src/cljs"]
+              :compiler {:output-to "dev.js"}}]}
   :codox {
     :project {
       :name "lcmap.client (Clojure)"
@@ -49,7 +54,7 @@
       :plugins [[lein-cljsbuild "1.1.4"]
                 [lein-codox "0.9.6"]]
       :aliases {"slamhound" ["run" "-m" "slam.hound"]}
-      :source-paths ["dev-resources/src"]}
+      :source-paths ["dev-resources/src/clj"]}
     :testing {
       :plugins [[lein-kibit "0.1.2" :exclusions [org.clojure/clojure]]
                 [jonase/eastwood "0.2.3"]]
