@@ -61,3 +61,5 @@ run:
 
 test-auth-server:
 	@cd test/support/auth-server && lein with-profile +dev run
+
+.PHONY: repl
