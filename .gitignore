@@ -11,3 +11,5 @@ pom.xml*
 *.clj~
 out/*
 repl/*
+*resources/public/js*
+.cljs_rhino_repl/*
