@@ -3,20 +3,23 @@
    * those intended for lcmap-rest itself
    * those that get passed to the underlying clj-http client library
    * and finally any options that are passed to Compojure as k/v pairs in
-  the request
+     the request
 
   As such, we have provided wrapper functions for clj-http that allow us to
   keep each of these separate from the others."
-  (:require [clojure.data.json :as json]
-            [clojure.string :as string]
-            [clojure.tools.logging :as log]
-            [clj-http.client :as http]
-            [dire.core :refer [with-handler!]]
-            [leiningen.core.project :as lein]
-            [lcmap.client.config :as config]
-            [lcmap.client.status-codes :as status]
-            [lcmap.client.util :as util]
-            [lcmap.config.helpers :refer [init-cfg]])
+  (:require [clojure.string :as string]
+            #?(:clj  [clj-http.client :as http]
+               :cljs [cljs-http.client :as http])
+            #?(:cljs [cljs.core.async :refer [<!]])
+            #?(:clj  [clojure.tools.logging :as log]
+               :cljs [taoensso.timbre :as log :include-macros true])
+            #?(:clj [clojure.data.json :as json])
+            #?(:clj [dire.core :refer [with-handler!]])
+            #?(:clj [lcmap.client.config :as config])
+            #?(:clj [lcmap.client.status-codes :as status])
+            [lcmap.client.util :as util :include-macros true]
+            #?(:clj [lcmap.config.helpers :refer [init-cfg]]))
+  #?(:cljs (:require-macros [cljs.core.async.macros :refer [go]]))
   (:refer-clojure :exclude [get]))
 
 ;;;; XXX The first implementation of this is a bit messy, as it grew while we
@@ -25,7 +28,9 @@
 
 ;;; Functions in this namespace do not use components, so they
 ;;; have no other way to get config... yet.
-(def ^:dynamic *http-config* (:lcmap.client (init-cfg config/defaults)))
+(def ^:dynamic *http-config*
+  #?(:clj  (:lcmap.client (init-cfg config/defaults))
+     :cljs {}))
 
 (def context "/api")
 (def server-version "0.5")
@@ -36,15 +41,17 @@
 ;;(def endpoint "http://lcmap.usgs.gov")
 
 (def endpoint (*http-config* :endpoint "http://localhost:1077"))
-(def client-version (:version (lein/read)))
+(def client-version (:version (util/slurp "project.clj")))
 
-(def project-url (:url (lein/read)))
+(def project-url (:url (util/slurp "project.clj")))
 (def user-agent (str "LCMAP REST Client/"
                      client-version
-                     " (Clojure "
-                     (clojure-version)
-                     "; Java "
-                     (System/getProperty "java.version")
+                     #?(:clj  " (Clojure "
+                        :cljs " (ClojureScript ")
+                     #?(:clj  (clojure-version)
+                        :cljs *clojurescript-version*)
+                     #?@(:clj  ["; Java "
+                                (System/getProperty "java.version")])
                      ") (+"
                      project-url
                      ")"))
@@ -52,6 +59,10 @@
 (def default-options {:endpoint endpoint
                       :return :body
                       :debug false})
+
+(def read-json
+  #?(:clj #(json/read-json % :key-fn keyword)
+     :cljs #(clj-js %)))
 
 (defn response
   "This primary purpose of this function is to codify a standard data
@@ -94,16 +105,25 @@
        :x-authtoken token})))
 
 (defn get-http-func [method]
-  (case method
-    :get #'http/get
-    :head #'http/head
-    :post #'http/post
-    :put #'http/put
-    :delete #'http/delete
-    :options #'http/options
-    :copy #'http/copy
-    :move #'http/move
-    :patch #'http/patch))
+  #?(:clj  (case method
+             :get #'http/get
+             :head #'http/head
+             :post #'http/post
+             :put #'http/put
+             :delete #'http/delete
+             :options #'http/options
+             :copy #'http/copy
+             :move #'http/move
+             :patch #'http/patch)
+     :cljs (case method
+             :get #'http/get
+             :head #'http/head
+             :post #'http/post
+             :put #'http/put
+             :delete #'http/delete
+             :options #'http/options
+             :move #'http/move
+             :patch #'http/patch)))
 
 (defn update-lcmap-opts
   "This combines the options specific to the LCMAP client in the following
@@ -161,11 +181,9 @@
     (log/tracef "For return type %s, got result: %s" return result)
     (case return
       :raw result
-      :body (:body (json/read-str (:body result) :key-fn keyword))
-      :result (get-in (json/read-str (:body result) :key-fn keyword)
-                      [:body :result])
-      :errors (get-in (json/read-str (:body result) :key-fn keyword)
-                      [:body :errors]))))
+      :body (:body (read-json (:body result)))
+      :result (get-in (read-json (:body result)) [:body :result])
+      :errors (get-in (read-json (:body result)) [:body :errors]))))
 
 (defn get [path & args]
   (http-call :get path args))
@@ -206,12 +224,13 @@
 
 ;;; Exception Handling
 
-(with-handler! #'http-call
-  [:status status/no-resource]
-  (fn [e & args]
-    (log/error e)
-    {:status (:status e)
-     :result nil
-     :errors ["Resource not found"]
-     :headers (:headers e)
-     :args args}))
+#?(:clj
+  (with-handler! #'http-call
+    [:status status/no-resource]
+    (fn [e & args]
+      (log/error e)
+      {:status (:status e)
+       :result nil
+       :errors ["Resource not found"]
+       :headers (:headers e)
+       :args args})))

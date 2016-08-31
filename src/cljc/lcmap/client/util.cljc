@@ -1,5 +1,6 @@
 (ns lcmap.client.util
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as string])
+  (:refer-clojure :exclude [slurp]))
 
 (def debug {:debug true
             :debug-body true
@@ -7,7 +8,8 @@
 
 (defn str->point [param-str]
   (transduce
-    (map #(Integer/parseInt %))
+    (map #?(:clj  #(Integer/parseInt %)
+            :cljs #(js/parseInt %)))
     conj
     (string/split param-str #",")))
 
@@ -41,3 +43,7 @@
   elment."
   [seq elm]
   (some #(= elm %) seq))
+
+(defmacro slurp [file]
+  "A slurp that can be used from cljs."
+  (clojure.core/slurp file))
