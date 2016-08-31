@@ -1,5 +1,11 @@
-JS_REPL_ID = "js-repl"
+WEB_REPL_ID = "firefox-repl"
+TERM_REPL_ID = "terminal-repl"
 JS_REPL_HTTP_PORT = 9001
+DEV_HTML_DIR = dev-resources/public
+DEV_JS_DIR = $(DEV_HTML_DIR)/js
+HTML_DIR = resources/public
+JS_DIR = $(HTML_DIR)/js
+OUT_DIR = out
 
 build: clean
 	@lein compile
@@ -21,10 +27,18 @@ js:
 	@lein cljsbuild once dev
 
 simpleton:
-	-@lein simpleton $(JS_REPL_HTTP_PORT) file :from dev-resources/html/dev.html &
+	-@cd $(DEV_HTML_DIR) && ln -s ../../$(JS_DIR) .
+	-@cd $(DEV_JS_DIR) && ln -s ../../$(OUT_DIR) .
+	-@lein simpleton $(JS_REPL_HTTP_PORT) file :from $(DEV_HTML_DIR) &
+
+repl-web: simpleton
+	@lein trampoline cljsbuild repl-launch $(WEB_REPL_ID)
 
 repl-js: simpleton
-	@lein trampoline cljsbuild repl-launch $(JS_REPL_ID)
+	@lein trampoline cljsbuild repl-launch $(TERM_REPL_ID)
+
+repl-rhino:
+	@rlwrap lein trampoline cljsbuild repl-rhino
 
 clean-all: clean clean-docs clean-docker
 
