@@ -1,37 +1,49 @@
 (defproject gov.usgs.eros/lcmap-client-clj "1.0.0-SNAPSHOT"
+  :parent-project {
+    :coords [gov.usgs.eros/lcmap-system "1.0.0-SNAPSHOT"]
+    :inherit [
+      :deploy-repositories
+      :license
+      :managed-dependencies
+      :plugins
+      :pom-addition
+      :repositories
+      :target
+      ;; XXX The following can be un-commented once this issue is resolved:
+      ;;     * https://github.com/achin/lein-parent/issues/3
+      ;; [:profiles [:uberjar :dev]]
+      ]}
   :description "Clojure Client for USGS LCMAP REST Service"
   :url "https://github.com/USGS-EROS/lcmap-client-clj"
-  :license {:name "NASA Open Source Agreement, Version 1.3"
-            :url "http://ti.arc.nasa.gov/opensource/nosa/"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.225"]
-                 [org.clojure/data.json "0.2.6"]
-                 [com.stuartsierra/component "0.3.1"]
-                 [clj-http "3.1.0"]
-                 [dire "0.5.4"]
-                 [leiningen-core "2.6.1"
-                   :exclusions [org.apache.maven.wagon/wagon-provider-api]]
+  :dependencies [[org.clojure/clojure]
+                 [org.clojure/core.async]
+                 [org.clojure/data.json]
+                 [org.clojure/tools.namespace]
+                 [com.stuartsierra/component]
+                 [clj-http]
+                 [dire]
+                 [leiningen-core]
                  ;; LCMAP Components
-                 [gov.usgs.eros/lcmap-config "1.0.0-SNAPSHOT"]
-                 [gov.usgs.eros/lcmap-logger "1.0.0-SNAPSHOT"
-                   :exclusions [org.slf4j/slf4j-api
-                                cheshire
-                                com.fasterxml.jackson.core/jackson-core
-                                com.fasterxml.jackson.dataformat/jackson-dataformat-cbor
-                                com.fasterxml.jackson.dataformat/jackson-dataformat-smile]]]
-  :source-paths ["src/clj"]
+                 [gov.usgs.eros/lcmap-config]
+                 [gov.usgs.eros/lcmap-logger]
+                 ;; ClojureScript
+                 [org.clojure/clojurescript]
+                 [cljs-http]
+                 [com.taoensso/timbre]]
+  :source-paths ["src/clj" "src/cljc"]
   :repl-options {:init-ns lcmap.client.dev}
-  :plugins [[lein-simpleton "1.3.0"]]
-  :prep-tasks ["compile" ["cljsbuild" "once"]]
-  :cljsbuild {
-    :repl-listen-port 9000
-    :repl-launch-commands {
-      "js-repl" ["firefox" "-jsconsole" "http://localhost:9001/"]}
-    :builds [{:source-paths ["src/cljs"]
-              :compiler {:output-to "lcmap.js"}}
-             {:id "dev"
-              :source-paths ["dev-resources/src/cljs"]
-              :compiler {:output-to "dev.js"}}]}
+  :plugins [[lein-parent "0.3.0"]]
+  ; :prep-tasks ["compile" ["cljsbuild" "once"]]
+  ; :cljsbuild {
+  ;   :repl-listen-port 9000
+  ;   :repl-launch-commands {
+  ;     "firefox-repl" ["firefox" "http://localhost:9001/lcmap-client.html"]
+  ;     "terminal-repl" ["phantomjs" "http://localhost:9001/lcmap-client.html"]}
+  ;   :builds [{:source-paths ["src/cljs" "src/cljc"]
+  ;             :compiler {:output-to "resources/public/js/lcmap/lcmap-client.js"}}
+  ;            {:id "dev"
+  ;             :source-paths ["dev-resources/src/cljs" "dev-resources/src/cljc"]
+  ;             :compiler {:output-to "es/public/js/lcmap/dev.js"}}]}
   :codox {
     :project {
       :name "lcmap.client (Clojure)"
@@ -48,15 +60,8 @@
       :env {
         :log-level :trace
         :logging-namespaces [lcmap.client]}
-      :dependencies [[org.clojure/tools.namespace "0.3.0-alpha3"]
-                     [pandect "0.6.0"]
-                     [slamhound "1.5.5"]]
-      :plugins [[lein-cljsbuild "1.1.4"]
-                [lein-codox "0.9.6"]]
       :aliases {"slamhound" ["run" "-m" "slam.hound"]}
-      :source-paths ["dev-resources/src/clj"]}
+      :source-paths ["dev-resources/src/clj" "dev-resources/src/cljs"]}
     :testing {
-      :plugins [[lein-kibit "0.1.2" :exclusions [org.clojure/clojure]]
-                [jonase/eastwood "0.2.3"]]
       :env {
         :log-level :info}}})
