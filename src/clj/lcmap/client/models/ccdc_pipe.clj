@@ -1,4 +1,4 @@
-(ns lcmap.client.models.ccdc-piped-processes
+(ns lcmap.client.models.ccdc-pipe
   (:require [lcmap.client.http :as http]
             [lcmap.client.models :as models]))
 
