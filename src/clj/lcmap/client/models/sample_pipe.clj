@@ -1,4 +1,4 @@
-(ns lcmap.client.models.sample-piped-processes
+(ns lcmap.client.models.sample-pipe
   (:require [lcmap.client.http :as http]
             [lcmap.client.models :as models]))
 

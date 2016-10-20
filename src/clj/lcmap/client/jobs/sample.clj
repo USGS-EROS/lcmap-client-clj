@@ -1,4 +1,4 @@
-(ns lcmap.client.jobs.sample-os-process
+(ns lcmap.client.jobs.sample
   (:require [lcmap.client.http :as http]
             [lcmap.client.jobs :as jobs]))
 

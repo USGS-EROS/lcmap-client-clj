@@ -1,4 +1,4 @@
-(ns lcmap.client.jobs.sample-docker-process
+(ns lcmap.client.jobs.sample-docker
   (:require [lcmap.client.http :as http]
             [lcmap.client.jobs :as jobs]))
 
